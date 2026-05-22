@@ -493,7 +493,7 @@ function Footer() {
         </div>
         <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: 20, fontSize: 12 }}>
           <p style={{ margin: "0 0 8px" }}>
-            © 2025 Vouchr by Novaforge Labs. Operating in Dantewada, Sukma &amp; Bijapur, Chhattisgarh.
+            © 2026 Vouchr by Novaforge Labs. Operating in Dantewada, Sukma &amp; Bijapur, Chhattisgarh.
           </p>
           <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
             <Link to="/privacy" style={{ color: COLORS.cyan, textDecoration: "none" }}>Privacy Policy</Link>
