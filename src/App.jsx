@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsConditions from "./pages/TermsConditions";
 
 const COLORS = {
   core: "#22508A",
@@ -37,12 +40,13 @@ function Nav() {
       top: 0,
       zIndex: 100,
     }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+      <Link to="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 8 }}>
         <span style={{
           fontWeight: 800,
           fontSize: 22,
           color: COLORS.core,
           letterSpacing: "-0.5px",
+          cursor: "pointer",
         }}>Vouchr</span>
         <span style={{
           fontSize: 10,
@@ -55,7 +59,7 @@ function Nav() {
           letterSpacing: "0.5px",
           textTransform: "uppercase",
         }}>by Novaforge Labs</span>
-      </div>
+      </Link>
       <a
         href="#register"
         style={{
@@ -488,12 +492,40 @@ function Footer() {
           </div>
         </div>
         <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: 20, fontSize: 12 }}>
-          <p style={{ margin: 0 }}>
+          <p style={{ margin: "0 0 8px" }}>
             © 2025 Vouchr by Novaforge Labs. Operating in Dantewada, Sukma &amp; Bijapur, Chhattisgarh.
           </p>
+          <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
+            <Link to="/privacy" style={{ color: COLORS.cyan, textDecoration: "none" }}>Privacy Policy</Link>
+            <Link to="/terms" style={{ color: COLORS.cyan, textDecoration: "none" }}>Terms & Conditions</Link>
+          </div>
         </div>
       </div>
     </footer>
+  );
+}
+
+/* ── HOMEPAGE ── */
+function Homepage() {
+  return (
+    <div style={styles.root}>
+      <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+      />
+      <Nav />
+      <Hero />
+      <Divider />
+      <WhatWeDo />
+      <Divider />
+      <HowItWorks />
+      <Divider />
+      <PlatformCodes />
+      <Divider />
+      <Districts />
+      <Register />
+      <Footer />
+    </div>
   );
 }
 
@@ -529,23 +561,12 @@ const sectionSub = {
 /* ── APP ── */
 export default function App() {
   return (
-    <div style={styles.root}>
-      <link
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet"
-      />
-      <Nav />
-      <Hero />
-      <Divider />
-      <WhatWeDo />
-      <Divider />
-      <HowItWorks />
-      <Divider />
-      <PlatformCodes />
-      <Divider />
-      <Districts />
-      <Register />
-      <Footer />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Homepage />} />
+        <Route path="/privacy" element={<PrivacyPolicy />} />
+        <Route path="/terms" element={<TermsConditions />} />
+      </Routes>
+    </Router>
   );
 }
