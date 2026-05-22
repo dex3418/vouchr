@@ -481,7 +481,7 @@ function Footer() {
             <p style={{ margin: "0 0 6px", color: COLORS.white, fontWeight: 600 }}>Connect</p>
             <p style={{ margin: "0 0 4px" }}>
               Instagram:{" "}
-              <a href="https://instagram.com/vouchr" target="_blank" rel="noopener noreferrer"
+              <a href="https://instagram.com/vouc.hr" target="_blank" rel="noopener noreferrer"
                 style={{ color: COLORS.cyan, textDecoration: "none" }}>@vouchr</a>
             </p>
             <p style={{ margin: 0 }}>contact@novaforgelabs.in</p>
