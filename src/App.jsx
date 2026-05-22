@@ -389,19 +389,19 @@ function Register() {
     {
       label: "Skill Learner",
       sub: "Looking to learn a new skill",
-      url: "https://forms.google.com",
+      url: "https://forms.gle/RxQsHp5mvgRnx9bJ7",
       code: "SLP",
     },
     {
       label: "Job Seeker",
       sub: "Looking for local employment",
-      url: "https://forms.google.com",
+      url: "https://forms.gle/qxj3Tcy5JnSnH9iw6",
       code: "JR",
     },
     {
       label: "Platform Registration",
       sub: "Register your institute or business",
-      url: "https://forms.google.com",
+      url: "https://forms.gle/6NtHf7YBzJebaWxm8",
       code: "B / VSLP / VJR / VB",
     },
   ];
