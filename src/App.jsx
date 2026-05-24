@@ -22,14 +22,24 @@ const styles = {
     background: COLORS.white,
     margin: 0,
     padding: 0,
+    scrollBehavior: "smooth",
   },
+};
+
+const glassEffect = {
+  background: "rgba(255, 255, 255, 0.7)",
+  backdropFilter: "blur(10px)",
+  WebkitBackdropFilter: "blur(10px)",
+  borderRadius: 10,
 };
 
 /* ── NAV ── */
 function Nav() {
   return (
     <nav style={{
-      background: COLORS.white,
+      background: "rgba(255, 255, 255, 0.8)",
+      backdropFilter: "blur(10px)",
+      WebkitBackdropFilter: "blur(10px)",
       borderBottom: `1px solid ${COLORS.border}`,
       padding: "0 20px",
       height: 56,
@@ -84,82 +94,116 @@ function Hero() {
     <section style={{
       background: COLORS.white,
       padding: "56px 20px 48px",
-      maxWidth: 680,
+      maxWidth: 1000,
       margin: "0 auto",
     }}>
-      {/* District pill */}
-      <div style={{
-        display: "inline-flex",
-        alignItems: "center",
-        gap: 6,
-        background: "#E8F4FF",
-        border: `1px solid #BDD9F5`,
-        borderRadius: 20,
-        padding: "5px 12px",
-        marginBottom: 24,
-      }}>
-        <span style={{ width: 7, height: 7, borderRadius: "50%", background: COLORS.cyan, display: "inline-block" }} />
-        <span style={{ fontSize: 12, fontWeight: 600, color: COLORS.core, letterSpacing: "0.3px" }}>
-          Dantewada · Sukma · Bijapur
-        </span>
-      </div>
-
-      <h1 style={{
-        fontSize: "clamp(30px, 8vw, 48px)",
-        fontWeight: 800,
-        lineHeight: 1.15,
-        color: COLORS.textDark,
-        margin: "0 0 16px",
-        letterSpacing: "-0.5px",
-      }}>
-        real people.<br />
-        real opportunities.<br />
-        <span style={{ color: COLORS.core }}>apne district mein.</span>
-      </h1>
-
-      <p style={{
-        fontSize: 17,
-        color: COLORS.textMid,
-        lineHeight: 1.6,
-        margin: "0 0 36px",
-        maxWidth: 520,
-      }}>
-        Connecting skill learners, job seekers aur business owners —{" "}
-        <strong style={{ color: COLORS.core }}>apne district mein.</strong>
-      </p>
-
-      <div style={{ display: "flex", flexDirection: "column", gap: 12, maxWidth: 340 }}>
-        <a
-          href="#register"
-          style={{
-            background: COLORS.core,
-            color: COLORS.white,
-            textAlign: "center",
-            padding: "14px 24px",
-            borderRadius: 8,
-            fontWeight: 700,
-            fontSize: 15,
-            textDecoration: "none",
-            letterSpacing: "0.1px",
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 40, alignItems: "center" }}>
+        <div>
+          {/* District pill */}
+          <div style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 6,
+            background: "#E8F4FF",
+            border: `1px solid #BDD9F5`,
+            borderRadius: 20,
+            padding: "5px 12px",
+            marginBottom: 24,
           }}>
-          Register as Individual
-        </a>
-        <a
-          href="#register"
-          style={{
-            background: COLORS.white,
-            color: COLORS.core,
-            textAlign: "center",
-            padding: "14px 24px",
-            borderRadius: 8,
-            fontWeight: 700,
-            fontSize: 15,
-            textDecoration: "none",
-            border: `2px solid ${COLORS.core}`,
-            letterSpacing: "0.1px",
+            <span style={{ width: 7, height: 7, borderRadius: "50%", background: COLORS.cyan, display: "inline-block" }} />
+            <span style={{ fontSize: 12, fontWeight: 600, color: COLORS.core, letterSpacing: "0.3px" }}>
+              Dantewada · Sukma · Bijapur
+            </span>
+          </div>
+
+          <h1 style={{
+            fontSize: "clamp(30px, 8vw, 48px)",
+            fontWeight: 800,
+            lineHeight: 1.15,
+            color: COLORS.textDark,
+            margin: "0 0 16px",
+            letterSpacing: "-0.5px",
           }}>
-          Register Your Platform
-        </a>
+            real people.<br />
+            real opportunities.<br />
+            <span style={{ color: COLORS.core }}>apne district mein.</span>
+          </h1>
+
+          <p style={{
+            fontSize: 17,
+            color: COLORS.textMid,
+            lineHeight: 1.6,
+            margin: "0 0 36px",
+            maxWidth: 520,
+          }}>
+            Connecting skill learners, job seekers aur business owners —{" "}
+            <strong style={{ color: COLORS.core }}>apne district mein.</strong>
+          </p>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: 12, maxWidth: 340 }}>
+            <a
+              href="#register"
+              style={{
+                background: COLORS.core,
+                color: COLORS.white,
+                textAlign: "center",
+                padding: "14px 24px",
+                borderRadius: 8,
+                fontWeight: 700,
+                fontSize: 15,
+                textDecoration: "none",
+                letterSpacing: "0.1px",
+              }}>
+              Register as Individual
+            </a>
+            <a
+              href="#register"
+              style={{
+                background: COLORS.white,
+                color: COLORS.core,
+                textAlign: "center",
+                padding: "14px 24px",
+                borderRadius: 8,
+                fontWeight: 700,
+                fontSize: 15,
+                textDecoration: "none",
+                border: `2px solid ${COLORS.core}`,
+                letterSpacing: "0.1px",
+              }}>
+              Register Your Platform
+            </a>
+          </div>
+        </div>
+
+        {/* Hero Image */}
+        <div style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}>
+          <div style={{
+            width: "100%",
+            maxWidth: 380,
+            height: 400,
+            background: "linear-gradient(135deg, #E8F4FF 0%, #BDD9F5 100%)",
+            borderRadius: 12,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            overflow: "hidden",
+          }}>
+            <img
+              src="https://via.placeholder.com/380x400?text=Vouchr+Network"
+              alt="Vouchr Network"
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                borderRadius: 12,
+              }}
+            />
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -199,10 +243,9 @@ function WhatWeDo() {
         <div style={{ display: "flex", flexDirection: "column", gap: 16, marginTop: 32 }}>
           {platforms.map(p => (
             <div key={p.code} style={{
-              background: COLORS.white,
-              border: `1px solid ${COLORS.border}`,
+              ...glassEffect,
+              border: `1px solid rgba(255, 255, 255, 0.3)`,
               borderLeft: `4px solid ${COLORS.core}`,
-              borderRadius: 10,
               padding: "20px 20px",
             }}>
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
@@ -257,9 +300,8 @@ function HowItWorks() {
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, marginTop: 32 }}>
           {/* Individuals */}
           <div style={{
-            background: COLORS.offwhite,
-            border: `1px solid ${COLORS.border}`,
-            borderRadius: 10,
+            ...glassEffect,
+            border: `1px solid rgba(255, 255, 255, 0.3)`,
             padding: "20px 16px",
           }}>
             <p style={{ fontWeight: 700, fontSize: 13, color: COLORS.core, marginBottom: 18, textTransform: "uppercase", letterSpacing: "0.8px" }}>
@@ -271,9 +313,8 @@ function HowItWorks() {
           </div>
           {/* Platforms */}
           <div style={{
-            background: COLORS.offwhite,
-            border: `1px solid ${COLORS.border}`,
-            borderRadius: 10,
+            ...glassEffect,
+            border: `1px solid rgba(255, 255, 255, 0.3)`,
             padding: "20px 16px",
           }}>
             <p style={{ fontWeight: 700, fontSize: 13, color: COLORS.core, marginBottom: 18, textTransform: "uppercase", letterSpacing: "0.8px" }}>
@@ -312,9 +353,8 @@ function PlatformCodes() {
               display: "flex",
               alignItems: "center",
               gap: 14,
-              background: COLORS.white,
-              border: `1px solid ${c.verified ? "#BDD9F5" : COLORS.border}`,
-              borderRadius: 8,
+              ...glassEffect,
+              border: `1px solid ${c.verified ? "rgba(189, 217, 245, 0.5)" : "rgba(255, 255, 255, 0.3)"}`,
               padding: "12px 16px",
             }}>
               <span style={{
@@ -370,10 +410,9 @@ function Districts() {
         }}>
           {["Dantewada", "Sukma", "Bijapur"].map(d => (
             <div key={d} style={{
-              background: COLORS.offwhite,
-              border: `1px solid ${COLORS.border}`,
+              ...glassEffect,
+              border: `1px solid rgba(255, 255, 255, 0.3)`,
               borderBottom: `3px solid ${COLORS.core}`,
-              borderRadius: 8,
               padding: "16px 28px",
               minWidth: 130,
             }}>
@@ -384,6 +423,178 @@ function Districts() {
         </div>
       </div>
     </section>
+  );
+}
+
+/* ── WHAT WE DO PAGE ── */
+function WhatWeDoPage() {
+  return (
+    <div style={{ ...styles.root }}>
+      <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+      />
+      <Nav />
+      <section style={{ padding: "48px 20px", background: COLORS.white, minHeight: "100vh" }}>
+        <div style={{ maxWidth: 760, margin: "0 auto" }}>
+          <SectionLabel>About</SectionLabel>
+          <h1 style={{
+            fontSize: "clamp(28px, 6vw, 42px)",
+            fontWeight: 800,
+            color: COLORS.textDark,
+            margin: "0 0 32px",
+            letterSpacing: "-0.3px",
+          }}>What We Do</h1>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
+            {/* Main Intro */}
+            <div>
+              <p style={{
+                fontSize: 16,
+                color: COLORS.textMid,
+                lineHeight: 1.8,
+                margin: 0,
+              }}>
+                Vouchr ek <strong>hyperlocal network</strong> hai jo Chhattisgarh ke underserved districts mein real opportunities tak pahunchata hai — skill learning, job recruitment, aur business connections ke through.
+              </p>
+              <p style={{
+                fontSize: 16,
+                color: COLORS.textMid,
+                lineHeight: 1.8,
+                margin: "16px 0 0",
+              }}>
+                Hum sirf listings nahi karte — hum <strong>verify karte hain, connect karte hain, aur ensure karte hain</strong> ki sahi insaan sahi jagah pahunche.
+              </p>
+            </div>
+
+            {/* What We Provide */}
+            <div>
+              <h2 style={{
+                fontSize: "clamp(22px, 5vw, 28px)",
+                fontWeight: 800,
+                color: COLORS.core,
+                margin: "0 0 20px",
+                letterSpacing: "-0.2px",
+              }}>What We Provide</h2>
+
+              <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
+                {/* Skill Learners */}
+                <div style={{
+                  ...glassEffect,
+                  border: `1px solid rgba(255, 255, 255, 0.3)`,
+                  borderLeft: `4px solid ${COLORS.core}`,
+                  padding: "20px",
+                }}>
+                  <h3 style={{
+                    fontSize: 17,
+                    fontWeight: 700,
+                    color: COLORS.textDark,
+                    margin: "0 0 12px",
+                  }}>For Skill Learners</h3>
+                  <p style={{
+                    fontSize: 15,
+                    color: COLORS.textMid,
+                    lineHeight: 1.7,
+                    margin: 0,
+                  }}>
+                    Verified skill learning platforms se <strong>direct connection</strong>. Koi fake promises nahi — sirf real programs jo aapki zindagi badal sakein.
+                  </p>
+                </div>
+
+                {/* Job Seekers */}
+                <div style={{
+                  ...glassEffect,
+                  border: `1px solid rgba(255, 255, 255, 0.3)`,
+                  borderLeft: `4px solid ${COLORS.core}`,
+                  padding: "20px",
+                }}>
+                  <h3 style={{
+                    fontSize: 17,
+                    fontWeight: 700,
+                    color: COLORS.textDark,
+                    margin: "0 0 12px",
+                  }}>For Job Seekers</h3>
+                  <p style={{
+                    fontSize: 15,
+                    color: COLORS.textMid,
+                    lineHeight: 1.7,
+                    margin: 0,
+                  }}>
+                    Local aur regional job opportunities directly apke paas. Hum <strong>pehle verify karte hain, phir connect karte hain</strong>.
+                  </p>
+                </div>
+
+                {/* Skill Learning Platforms */}
+                <div style={{
+                  ...glassEffect,
+                  border: `1px solid rgba(255, 255, 255, 0.3)`,
+                  borderLeft: `4px solid ${COLORS.core}`,
+                  padding: "20px",
+                }}>
+                  <h3 style={{
+                    fontSize: 17,
+                    fontWeight: 700,
+                    color: COLORS.textDark,
+                    margin: "0 0 12px",
+                  }}>For Skill Learning Platforms</h3>
+                  <p style={{
+                    fontSize: 15,
+                    color: COLORS.textMid,
+                    lineHeight: 1.7,
+                    margin: 0,
+                  }}>
+                    Apne program ke liye <strong>serious, verified students directly apke paas</strong>. Zero time waste.
+                  </p>
+                </div>
+
+                {/* Recruiters */}
+                <div style={{
+                  ...glassEffect,
+                  border: `1px solid rgba(255, 255, 255, 0.3)`,
+                  borderLeft: `4px solid ${COLORS.core}`,
+                  padding: "20px",
+                }}>
+                  <h3 style={{
+                    fontSize: 17,
+                    fontWeight: 700,
+                    color: COLORS.textDark,
+                    margin: "0 0 12px",
+                  }}>For Recruiters</h3>
+                  <p style={{
+                    fontSize: 15,
+                    color: COLORS.textMid,
+                    lineHeight: 1.7,
+                    margin: 0,
+                  }}>
+                    <strong>Pre-confirmed, interested candidates</strong>. Hum call karke confirm karte hain pehle — phir aapko bhejte hain.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* CTA */}
+            <div style={{ marginTop: 16 }}>
+              <Link
+                to="/"
+                style={{
+                  display: "inline-block",
+                  background: COLORS.core,
+                  color: COLORS.white,
+                  padding: "12px 24px",
+                  borderRadius: 8,
+                  fontWeight: 700,
+                  fontSize: 15,
+                  textDecoration: "none",
+                  letterSpacing: "0.1px",
+                }}>
+                ← Back to Home
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+      <Footer />
+    </div>
   );
 }
 
@@ -436,7 +647,7 @@ function Register() {
               target="_blank"
               rel="noopener noreferrer"
               style={{
-                background: COLORS.white,
+                background: "rgba(255, 255, 255, 0.95)",
                 border: "none",
                 borderRadius: 10,
                 padding: "16px 20px",
@@ -498,6 +709,7 @@ function Footer() {
           <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
             <Link to="/privacy" style={{ color: COLORS.cyan, textDecoration: "none" }}>Privacy Policy</Link>
             <Link to="/terms" style={{ color: COLORS.cyan, textDecoration: "none" }}>Terms & Conditions</Link>
+            <Link to="/what-we-do" style={{ color: COLORS.cyan, textDecoration: "none" }}>What We Do</Link>
           </div>
         </div>
       </div>
@@ -566,6 +778,7 @@ export default function App() {
         <Route path="/" element={<Homepage />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/terms" element={<TermsConditions />} />
+        <Route path="/what-we-do" element={<WhatWeDoPage />} />
       </Routes>
     </Router>
   );
