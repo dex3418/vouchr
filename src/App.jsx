@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsConditions from "./pages/TermsConditions";
-import * as THREE from "three";
 import heroImage from "./assets/hero.jpg";
 import favicon from "./assets/favicon.png";
 
@@ -44,97 +43,67 @@ const glassEffectHover = {
   transform: "translateY(-4px)",
 };
 
-/* ── THREE.JS BACKGROUND EFFECT ── */
-function ThreeBackground() {
-  const containerRef = useRef(null);
-  const sceneRef = useRef(null);
-  const scrollY = useRef(0);
-
-  useEffect(() => {
-    if (!containerRef.current) return;
-
-    // Scene setup
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(
-      75,
-      containerRef.current.clientWidth / containerRef.current.clientHeight,
-      0.1,
-      1000
-    );
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-
-    renderer.setSize(containerRef.current.clientWidth, containerRef.current.clientHeight);
-    renderer.setClearColor(0xffffff, 0);
-    containerRef.current.appendChild(renderer.domElement);
-
-    camera.position.z = 5;
-    sceneRef.current = { scene, camera, renderer };
-
-    // Create floating particles
-    const geometry = new THREE.BufferGeometry();
-    const vertices = [];
-    const particleCount = 50;
-
-    for (let i = 0; i < particleCount; i++) {
-      vertices.push(
-        (Math.random() - 0.5) * 20,
-        (Math.random() - 0.5) * 20,
-        (Math.random() - 0.5) * 10
-      );
-    }
-
-    geometry.setAttribute("position", new THREE.BufferAttribute(new Float32Array(vertices), 3));
-
-    const material = new THREE.PointsMaterial({
-      color: 0x22508a,
-      size: 0.1,
-      opacity: 0.3,
-      sizeAttenuation: true,
-    });
-
-    const particles = new THREE.Points(geometry, material);
-    scene.add(particles);
-
-    // Handle scroll
-    const handleScroll = () => {
-      scrollY.current = window.scrollY * 0.01;
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    // Animation loop
-    const animate = () => {
-      requestAnimationFrame(animate);
-
-      particles.rotation.x += 0.0001;
-      particles.rotation.y += 0.0002;
-      particles.position.y = scrollY.current * 0.5;
-
-      renderer.render(scene, camera);
-    };
-
-    animate();
-
-    // Handle resize
-    const handleResize = () => {
-      if (!containerRef.current) return;
-      const width = containerRef.current.clientWidth;
-      const height = containerRef.current.clientHeight;
-      camera.aspect = width / height;
-      camera.updateProjectionMatrix();
-      renderer.setSize(width, height);
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleResize);
-      containerRef.current?.removeChild(renderer.domElement);
-    };
-  }, []);
-
-  return <div ref={containerRef} style={{ position: "fixed", top: 0, left: 0, width: "100%", height: "100%", zIndex: 0, pointerEvents: "none" }} />;
+/* ── ANIMATED BACKGROUND ── */
+function AnimatedBackground() {
+  return (
+    <div style={{
+      position: "fixed",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      zIndex: 0,
+      pointerEvents: "none",
+      overflow: "hidden",
+      background: "radial-gradient(circle at 20% 50%, rgba(34, 80, 138, 0.05) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(0, 194, 255, 0.03) 0%, transparent 50%)",
+    }}>
+      <style>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0px) translateX(0px); }
+          25% { transform: translateY(-20px) translateX(10px); }
+          50% { transform: translateY(-40px) translateX(0px); }
+          75% { transform: translateY(-20px) translateX(-10px); }
+        }
+        
+        .floating-shape {
+          position: absolute;
+          border-radius: 50%;
+          opacity: 0.05;
+          animation: float 8s ease-in-out infinite;
+        }
+        
+        .shape-1 {
+          width: 300px;
+          height: 300px;
+          background: #22508A;
+          top: -100px;
+          left: 10%;
+          animation-delay: 0s;
+        }
+        
+        .shape-2 {
+          width: 200px;
+          height: 200px;
+          background: #00C2FF;
+          top: 50%;
+          right: 5%;
+          animation-delay: 2s;
+        }
+        
+        .shape-3 {
+          width: 250px;
+          height: 250px;
+          background: #3A82C4;
+          bottom: -80px;
+          left: 50%;
+          animation-delay: 4s;
+        }
+      `}</style>
+      <div className="floating-shape shape-1" />
+      <div className="floating-shape shape-2" />
+      <div className="floating-shape shape-3" />
+    </div>
+  );
 }
 
 /* ── NAV ── */
@@ -637,7 +606,7 @@ function WhatWeDoPage() {
         rel="stylesheet"
       />
       <link rel="icon" type="image/png" href={favicon} />
-      <ThreeBackground />
+      <AnimatedBackground />
       <Nav />
       <section style={{ padding: "48px 20px", background: COLORS.white, minHeight: "100vh", position: "relative", zIndex: 1 }}>
         <div style={{ maxWidth: 760, margin: "0 auto" }}>
@@ -1006,7 +975,7 @@ function Homepage() {
         rel="stylesheet"
       />
       <link rel="icon" type="image/png" href={favicon} />
-      <ThreeBackground />
+      <AnimatedBackground />
       <Nav />
       <Hero />
       <Divider />
