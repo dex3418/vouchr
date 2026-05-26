@@ -1,7 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsConditions from "./pages/TermsConditions";
+import * as THREE from "three";
+import heroImage from "./assets/hero.jpg";
+import favicon from "./assets/favicon.png";
 
 const COLORS = {
   core: "#22508A",
@@ -31,7 +34,108 @@ const glassEffect = {
   backdropFilter: "blur(10px)",
   WebkitBackdropFilter: "blur(10px)",
   borderRadius: 10,
+  transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
 };
+
+const glassEffectHover = {
+  ...glassEffect,
+  background: "rgba(255, 255, 255, 0.85)",
+  boxShadow: "0 8px 32px 0 rgba(34, 80, 138, 0.1)",
+  transform: "translateY(-4px)",
+};
+
+/* ── THREE.JS BACKGROUND EFFECT ── */
+function ThreeBackground() {
+  const containerRef = useRef(null);
+  const sceneRef = useRef(null);
+  const scrollY = useRef(0);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    // Scene setup
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(
+      75,
+      containerRef.current.clientWidth / containerRef.current.clientHeight,
+      0.1,
+      1000
+    );
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+
+    renderer.setSize(containerRef.current.clientWidth, containerRef.current.clientHeight);
+    renderer.setClearColor(0xffffff, 0);
+    containerRef.current.appendChild(renderer.domElement);
+
+    camera.position.z = 5;
+    sceneRef.current = { scene, camera, renderer };
+
+    // Create floating particles
+    const geometry = new THREE.BufferGeometry();
+    const vertices = [];
+    const particleCount = 50;
+
+    for (let i = 0; i < particleCount; i++) {
+      vertices.push(
+        (Math.random() - 0.5) * 20,
+        (Math.random() - 0.5) * 20,
+        (Math.random() - 0.5) * 10
+      );
+    }
+
+    geometry.setAttribute("position", new THREE.BufferAttribute(new Float32Array(vertices), 3));
+
+    const material = new THREE.PointsMaterial({
+      color: 0x22508a,
+      size: 0.1,
+      opacity: 0.3,
+      sizeAttenuation: true,
+    });
+
+    const particles = new THREE.Points(geometry, material);
+    scene.add(particles);
+
+    // Handle scroll
+    const handleScroll = () => {
+      scrollY.current = window.scrollY * 0.01;
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    // Animation loop
+    const animate = () => {
+      requestAnimationFrame(animate);
+
+      particles.rotation.x += 0.0001;
+      particles.rotation.y += 0.0002;
+      particles.position.y = scrollY.current * 0.5;
+
+      renderer.render(scene, camera);
+    };
+
+    animate();
+
+    // Handle resize
+    const handleResize = () => {
+      if (!containerRef.current) return;
+      const width = containerRef.current.clientWidth;
+      const height = containerRef.current.clientHeight;
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+      renderer.setSize(width, height);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
+      containerRef.current?.removeChild(renderer.domElement);
+    };
+  }, []);
+
+  return <div ref={containerRef} style={{ position: "fixed", top: 0, left: 0, width: "100%", height: "100%", zIndex: 0, pointerEvents: "none" }} />;
+}
 
 /* ── NAV ── */
 function Nav() {
@@ -48,7 +152,7 @@ function Nav() {
       justifyContent: "space-between",
       position: "sticky",
       top: 0,
-      zIndex: 100,
+      zIndex: 101,
     }}>
       <Link to="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 8 }}>
         <span style={{
@@ -81,7 +185,17 @@ function Nav() {
           borderRadius: 6,
           textDecoration: "none",
           letterSpacing: "0.2px",
-        }}>
+          transition: "all 0.3s ease",
+        }}
+        onMouseEnter={(e) => {
+          e.target.style.boxShadow = "0 8px 20px rgba(34, 80, 138, 0.3)";
+          e.target.style.transform = "translateY(-2px)";
+        }}
+        onMouseLeave={(e) => {
+          e.target.style.boxShadow = "none";
+          e.target.style.transform = "translateY(0)";
+        }}
+      >
         Register
       </a>
     </nav>
@@ -96,6 +210,8 @@ function Hero() {
       padding: "56px 20px 48px",
       maxWidth: 1000,
       margin: "0 auto",
+      position: "relative",
+      zIndex: 1,
     }}>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 40, alignItems: "center" }}>
         <div>
@@ -109,6 +225,7 @@ function Hero() {
             borderRadius: 20,
             padding: "5px 12px",
             marginBottom: 24,
+            animation: "fadeInUp 0.6s ease-out",
           }}>
             <span style={{ width: 7, height: 7, borderRadius: "50%", background: COLORS.cyan, display: "inline-block" }} />
             <span style={{ fontSize: 12, fontWeight: 600, color: COLORS.core, letterSpacing: "0.3px" }}>
@@ -123,6 +240,7 @@ function Hero() {
             color: COLORS.textDark,
             margin: "0 0 16px",
             letterSpacing: "-0.5px",
+            animation: "fadeInUp 0.8s ease-out 0.1s both",
           }}>
             real people.<br />
             real opportunities.<br />
@@ -135,12 +253,13 @@ function Hero() {
             lineHeight: 1.6,
             margin: "0 0 36px",
             maxWidth: 520,
+            animation: "fadeInUp 1s ease-out 0.2s both",
           }}>
             Connecting skill learners, job seekers aur business owners —{" "}
             <strong style={{ color: COLORS.core }}>apne district mein.</strong>
           </p>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: 12, maxWidth: 340 }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 12, maxWidth: 340, animation: "fadeInUp 1.2s ease-out 0.3s both" }}>
             <a
               href="#register"
               style={{
@@ -153,7 +272,17 @@ function Hero() {
                 fontSize: 15,
                 textDecoration: "none",
                 letterSpacing: "0.1px",
-              }}>
+                transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.transform = "translateY(-2px)";
+                e.target.style.boxShadow = "0 12px 24px rgba(34, 80, 138, 0.3)";
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.transform = "translateY(0)";
+                e.target.style.boxShadow = "none";
+              }}
+            >
               Register as Individual
             </a>
             <a
@@ -169,7 +298,21 @@ function Hero() {
                 textDecoration: "none",
                 border: `2px solid ${COLORS.core}`,
                 letterSpacing: "0.1px",
-              }}>
+                transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.background = COLORS.core;
+                e.target.style.color = COLORS.white;
+                e.target.style.transform = "translateY(-2px)";
+                e.target.style.boxShadow = "0 12px 24px rgba(34, 80, 138, 0.3)";
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.background = COLORS.white;
+                e.target.style.color = COLORS.core;
+                e.target.style.transform = "translateY(0)";
+                e.target.style.boxShadow = "none";
+              }}
+            >
               Register Your Platform
             </a>
           </div>
@@ -191,9 +334,11 @@ function Hero() {
             alignItems: "center",
             justifyContent: "center",
             overflow: "hidden",
+            boxShadow: "0 20px 60px rgba(34, 80, 138, 0.15)",
+            animation: "fadeInUp 1s ease-out 0.4s both",
           }}>
             <img
-              src="https://via.placeholder.com/380x400?text=Vouchr+Network"
+              src={heroImage}
               alt="Vouchr Network"
               style={{
                 width: "100%",
@@ -205,13 +350,26 @@ function Hero() {
           </div>
         </div>
       </div>
+
+      <style>{`
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
     </section>
   );
 }
 
 /* ── DIVIDER ── */
 function Divider() {
-  return <div style={{ height: 1, background: COLORS.border, margin: "0 20px" }} />;
+  return <div style={{ height: 1, background: COLORS.border, margin: "0 20px", position: "relative", zIndex: 1 }} />;
 }
 
 /* ── WHAT WE DO ── */
@@ -234,20 +392,29 @@ const platforms = [
 ];
 
 function WhatWeDo() {
+  const [hoveredCard, setHoveredCard] = useState(null);
+
   return (
-    <section style={{ padding: "48px 20px", background: COLORS.offwhite }}>
+    <section style={{ padding: "48px 20px", background: COLORS.offwhite, position: "relative", zIndex: 1 }}>
       <div style={{ maxWidth: 680, margin: "0 auto" }}>
         <SectionLabel>What We Do</SectionLabel>
         <h2 style={sectionHeading}>Three platforms. One network.</h2>
         <p style={sectionSub}>Vouchr operates three connected platforms under one district-level network.</p>
         <div style={{ display: "flex", flexDirection: "column", gap: 16, marginTop: 32 }}>
-          {platforms.map(p => (
-            <div key={p.code} style={{
-              ...glassEffect,
-              border: `1px solid rgba(255, 255, 255, 0.3)`,
-              borderLeft: `4px solid ${COLORS.core}`,
-              padding: "20px 20px",
-            }}>
+          {platforms.map((p, idx) => (
+            <div
+              key={p.code}
+              style={{
+                ...glassEffect,
+                ...(hoveredCard === idx ? glassEffectHover : {}),
+                border: `1px solid rgba(255, 255, 255, 0.3)`,
+                borderLeft: `4px solid ${COLORS.core}`,
+                padding: "20px 20px",
+                cursor: "pointer",
+              }}
+              onMouseEnter={() => setHoveredCard(idx)}
+              onMouseLeave={() => setHoveredCard(null)}
+            >
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
                 <span style={{
                   background: COLORS.core,
@@ -257,6 +424,7 @@ function WhatWeDo() {
                   padding: "3px 9px",
                   borderRadius: 4,
                   letterSpacing: "1px",
+                  transition: "all 0.3s ease",
                 }}>{p.code}</span>
                 <span style={{ fontWeight: 700, fontSize: 15, color: COLORS.textDark }}>{p.label}</span>
               </div>
@@ -285,6 +453,7 @@ function Step({ num, text }) {
         alignItems: "center",
         justifyContent: "center",
         marginTop: 1,
+        boxShadow: "0 4px 12px rgba(34, 80, 138, 0.2)",
       }}>{num}</span>
       <span style={{ fontSize: 14, color: COLORS.textMid, lineHeight: 1.5, paddingTop: 4 }}>{text}</span>
     </div>
@@ -292,18 +461,26 @@ function Step({ num, text }) {
 }
 
 function HowItWorks() {
+  const [hoveredColumn, setHoveredColumn] = useState(null);
+
   return (
-    <section style={{ padding: "48px 20px", background: COLORS.white }}>
+    <section style={{ padding: "48px 20px", background: COLORS.white, position: "relative", zIndex: 1 }}>
       <div style={{ maxWidth: 680, margin: "0 auto" }}>
         <SectionLabel>How It Works</SectionLabel>
         <h2 style={sectionHeading}>Simple. Fast. Local.</h2>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, marginTop: 32 }}>
           {/* Individuals */}
-          <div style={{
-            ...glassEffect,
-            border: `1px solid rgba(255, 255, 255, 0.3)`,
-            padding: "20px 16px",
-          }}>
+          <div
+            style={{
+              ...glassEffect,
+              ...(hoveredColumn === 0 ? glassEffectHover : {}),
+              border: `1px solid rgba(255, 255, 255, 0.3)`,
+              padding: "20px 16px",
+              cursor: "pointer",
+            }}
+            onMouseEnter={() => setHoveredColumn(0)}
+            onMouseLeave={() => setHoveredColumn(null)}
+          >
             <p style={{ fontWeight: 700, fontSize: 13, color: COLORS.core, marginBottom: 18, textTransform: "uppercase", letterSpacing: "0.8px" }}>
               For Individuals
             </p>
@@ -312,11 +489,17 @@ function HowItWorks() {
             <Step num={3} text="Get connected locally" />
           </div>
           {/* Platforms */}
-          <div style={{
-            ...glassEffect,
-            border: `1px solid rgba(255, 255, 255, 0.3)`,
-            padding: "20px 16px",
-          }}>
+          <div
+            style={{
+              ...glassEffect,
+              ...(hoveredColumn === 1 ? glassEffectHover : {}),
+              border: `1px solid rgba(255, 255, 255, 0.3)`,
+              padding: "20px 16px",
+              cursor: "pointer",
+            }}
+            onMouseEnter={() => setHoveredColumn(1)}
+            onMouseLeave={() => setHoveredColumn(null)}
+          >
             <p style={{ fontWeight: 700, fontSize: 13, color: COLORS.core, marginBottom: 18, textTransform: "uppercase", letterSpacing: "0.8px" }}>
               For Platforms
             </p>
@@ -341,22 +524,31 @@ const codes = [
 ];
 
 function PlatformCodes() {
+  const [hoveredCode, setHoveredCode] = useState(null);
+
   return (
-    <section style={{ padding: "48px 20px", background: COLORS.offwhite }}>
+    <section style={{ padding: "48px 20px", background: COLORS.offwhite, position: "relative", zIndex: 1 }}>
       <div style={{ maxWidth: 680, margin: "0 auto" }}>
         <SectionLabel>Platform Codes</SectionLabel>
         <h2 style={sectionHeading}>What the codes mean</h2>
         <p style={sectionSub}>Every listing on Vouchr carries a code. Verified platforms carry a V-prefix.</p>
         <div style={{ display: "flex", flexDirection: "column", gap: 10, marginTop: 28 }}>
-          {codes.map(c => (
-            <div key={c.code} style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 14,
-              ...glassEffect,
-              border: `1px solid ${c.verified ? "rgba(189, 217, 245, 0.5)" : "rgba(255, 255, 255, 0.3)"}`,
-              padding: "12px 16px",
-            }}>
+          {codes.map((c, idx) => (
+            <div
+              key={c.code}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 14,
+                ...glassEffect,
+                ...(hoveredCode === idx ? glassEffectHover : {}),
+                border: `1px solid ${c.verified ? "rgba(189, 217, 245, 0.5)" : "rgba(255, 255, 255, 0.3)"}`,
+                padding: "12px 16px",
+                cursor: "pointer",
+              }}
+              onMouseEnter={() => setHoveredCode(idx)}
+              onMouseLeave={() => setHoveredCode(null)}
+            >
               <span style={{
                 fontWeight: 800,
                 fontSize: 12,
@@ -368,6 +560,7 @@ function PlatformCodes() {
                 border: c.verified ? "none" : `1px solid ${COLORS.border}`,
                 minWidth: 44,
                 textAlign: "center",
+                boxShadow: c.verified ? "0 4px 12px rgba(34, 80, 138, 0.2)" : "none",
               }}>{c.code}</span>
               <span style={{ fontSize: 13, color: COLORS.textMid }}>
                 {c.desc}
@@ -393,8 +586,10 @@ function PlatformCodes() {
 
 /* ── DISTRICTS ── */
 function Districts() {
+  const [hoveredDistrict, setHoveredDistrict] = useState(null);
+
   return (
-    <section style={{ padding: "48px 20px", background: COLORS.white }}>
+    <section style={{ padding: "48px 20px", background: COLORS.white, position: "relative", zIndex: 1 }}>
       <div style={{ maxWidth: 680, margin: "0 auto", textAlign: "center" }}>
         <SectionLabel>Coverage</SectionLabel>
         <h2 style={{ ...sectionHeading, textAlign: "center" }}>Districts we cover</h2>
@@ -408,14 +603,21 @@ function Districts() {
           gap: 12,
           marginTop: 28,
         }}>
-          {["Dantewada", "Sukma", "Bijapur"].map(d => (
-            <div key={d} style={{
-              ...glassEffect,
-              border: `1px solid rgba(255, 255, 255, 0.3)`,
-              borderBottom: `3px solid ${COLORS.core}`,
-              padding: "16px 28px",
-              minWidth: 130,
-            }}>
+          {["Dantewada", "Sukma", "Bijapur"].map((d, idx) => (
+            <div
+              key={d}
+              style={{
+                ...glassEffect,
+                ...(hoveredDistrict === idx ? glassEffectHover : {}),
+                border: `1px solid rgba(255, 255, 255, 0.3)`,
+                borderBottom: `3px solid ${COLORS.core}`,
+                padding: "16px 28px",
+                minWidth: 130,
+                cursor: "pointer",
+              }}
+              onMouseEnter={() => setHoveredDistrict(idx)}
+              onMouseLeave={() => setHoveredDistrict(null)}
+            >
               <p style={{ margin: 0, fontWeight: 700, fontSize: 16, color: COLORS.textDark }}>{d}</p>
               <p style={{ margin: "4px 0 0", fontSize: 12, color: COLORS.textLight }}>Chhattisgarh</p>
             </div>
@@ -434,8 +636,10 @@ function WhatWeDoPage() {
         href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap"
         rel="stylesheet"
       />
+      <link rel="icon" type="image/png" href={favicon} />
+      <ThreeBackground />
       <Nav />
-      <section style={{ padding: "48px 20px", background: COLORS.white, minHeight: "100vh" }}>
+      <section style={{ padding: "48px 20px", background: COLORS.white, minHeight: "100vh", position: "relative", zIndex: 1 }}>
         <div style={{ maxWidth: 760, margin: "0 auto" }}>
           <SectionLabel>About</SectionLabel>
           <h1 style={{
@@ -455,7 +659,7 @@ function WhatWeDoPage() {
                 lineHeight: 1.8,
                 margin: 0,
               }}>
-                Vouchr ek <strong>hyperlocal network</strong> hai jo Chhattisgarh ke underserved districts mein real opportunities tak pahunchata hai — skill learning, job recruitment, aur business connections ke through.
+                Vouchr ek <strong>hyperlocal network</strong> hai jo Chhattisgarh ke underserved districts mein real opportunities tak pahunchata hai — skill learning, job recruitment, aur business [...]
               </p>
               <p style={{
                 fontSize: 16,
@@ -479,12 +683,23 @@ function WhatWeDoPage() {
 
               <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
                 {/* Skill Learners */}
-                <div style={{
-                  ...glassEffect,
-                  border: `1px solid rgba(255, 255, 255, 0.3)`,
-                  borderLeft: `4px solid ${COLORS.core}`,
-                  padding: "20px",
-                }}>
+                <div
+                  style={{
+                    ...glassEffect,
+                    border: `1px solid rgba(255, 255, 255, 0.3)`,
+                    borderLeft: `4px solid ${COLORS.core}`,
+                    padding: "20px",
+                    transition: "all 0.3s ease",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = "rgba(255, 255, 255, 0.85)";
+                    e.currentTarget.style.transform = "translateY(-4px)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = "rgba(255, 255, 255, 0.7)";
+                    e.currentTarget.style.transform = "translateY(0)";
+                  }}
+                >
                   <h3 style={{
                     fontSize: 17,
                     fontWeight: 700,
@@ -502,12 +717,23 @@ function WhatWeDoPage() {
                 </div>
 
                 {/* Job Seekers */}
-                <div style={{
-                  ...glassEffect,
-                  border: `1px solid rgba(255, 255, 255, 0.3)`,
-                  borderLeft: `4px solid ${COLORS.core}`,
-                  padding: "20px",
-                }}>
+                <div
+                  style={{
+                    ...glassEffect,
+                    border: `1px solid rgba(255, 255, 255, 0.3)`,
+                    borderLeft: `4px solid ${COLORS.core}`,
+                    padding: "20px",
+                    transition: "all 0.3s ease",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = "rgba(255, 255, 255, 0.85)";
+                    e.currentTarget.style.transform = "translateY(-4px)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = "rgba(255, 255, 255, 0.7)";
+                    e.currentTarget.style.transform = "translateY(0)";
+                  }}
+                >
                   <h3 style={{
                     fontSize: 17,
                     fontWeight: 700,
@@ -525,12 +751,23 @@ function WhatWeDoPage() {
                 </div>
 
                 {/* Skill Learning Platforms */}
-                <div style={{
-                  ...glassEffect,
-                  border: `1px solid rgba(255, 255, 255, 0.3)`,
-                  borderLeft: `4px solid ${COLORS.core}`,
-                  padding: "20px",
-                }}>
+                <div
+                  style={{
+                    ...glassEffect,
+                    border: `1px solid rgba(255, 255, 255, 0.3)`,
+                    borderLeft: `4px solid ${COLORS.core}`,
+                    padding: "20px",
+                    transition: "all 0.3s ease",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = "rgba(255, 255, 255, 0.85)";
+                    e.currentTarget.style.transform = "translateY(-4px)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = "rgba(255, 255, 255, 0.7)";
+                    e.currentTarget.style.transform = "translateY(0)";
+                  }}
+                >
                   <h3 style={{
                     fontSize: 17,
                     fontWeight: 700,
@@ -548,12 +785,23 @@ function WhatWeDoPage() {
                 </div>
 
                 {/* Recruiters */}
-                <div style={{
-                  ...glassEffect,
-                  border: `1px solid rgba(255, 255, 255, 0.3)`,
-                  borderLeft: `4px solid ${COLORS.core}`,
-                  padding: "20px",
-                }}>
+                <div
+                  style={{
+                    ...glassEffect,
+                    border: `1px solid rgba(255, 255, 255, 0.3)`,
+                    borderLeft: `4px solid ${COLORS.core}`,
+                    padding: "20px",
+                    transition: "all 0.3s ease",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = "rgba(255, 255, 255, 0.85)";
+                    e.currentTarget.style.transform = "translateY(-4px)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = "rgba(255, 255, 255, 0.7)";
+                    e.currentTarget.style.transform = "translateY(0)";
+                  }}
+                >
                   <h3 style={{
                     fontSize: 17,
                     fontWeight: 700,
@@ -586,7 +834,17 @@ function WhatWeDoPage() {
                   fontSize: 15,
                   textDecoration: "none",
                   letterSpacing: "0.1px",
-                }}>
+                  transition: "all 0.3s ease",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "translateY(-2px)";
+                  e.currentTarget.style.boxShadow = "0 12px 24px rgba(34, 80, 138, 0.3)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "translateY(0)";
+                  e.currentTarget.style.boxShadow = "none";
+                }}
+              >
                 ← Back to Home
               </Link>
             </div>
@@ -600,6 +858,8 @@ function WhatWeDoPage() {
 
 /* ── REGISTER ── */
 function Register() {
+  const [hoveredForm, setHoveredForm] = useState(null);
+
   const forms = [
     {
       label: "Skill Learner",
@@ -622,7 +882,7 @@ function Register() {
   ];
 
   return (
-    <section id="register" style={{ padding: "48px 20px", background: COLORS.core }}>
+    <section id="register" style={{ padding: "48px 20px", background: COLORS.core, position: "relative", zIndex: 1 }}>
       <div style={{ maxWidth: 680, margin: "0 auto" }}>
         <p style={{ fontSize: 12, fontWeight: 700, color: COLORS.cyan, textTransform: "uppercase", letterSpacing: "1.2px", marginBottom: 8 }}>
           Get Started
@@ -640,7 +900,7 @@ function Register() {
           Select your category and fill the form. Our team will reach out within 48 hours.
         </p>
         <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-          {forms.map(f => (
+          {forms.map((f, idx) => (
             <a
               key={f.label}
               href={f.url}
@@ -655,7 +915,16 @@ function Register() {
                 alignItems: "center",
                 justifyContent: "space-between",
                 textDecoration: "none",
-              }}>
+                transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                ...(hoveredForm === idx ? {
+                  background: "rgba(255, 255, 255, 1)",
+                  boxShadow: "0 12px 32px rgba(0, 0, 0, 0.15)",
+                  transform: "translateY(-4px)",
+                } : {}),
+              }}
+              onMouseEnter={() => setHoveredForm(idx)}
+              onMouseLeave={() => setHoveredForm(null)}
+            >
               <div>
                 <p style={{ margin: 0, fontWeight: 700, fontSize: 15, color: COLORS.core }}>{f.label}</p>
                 <p style={{ margin: "3px 0 0", fontSize: 12, color: COLORS.textLight }}>{f.sub}</p>
@@ -685,6 +954,8 @@ function Footer() {
       background: "#0D1929",
       padding: "32px 20px",
       color: "rgba(255,255,255,0.5)",
+      position: "relative",
+      zIndex: 1,
     }}>
       <div style={{ maxWidth: 680, margin: "0 auto" }}>
         <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: 20, marginBottom: 24 }}>
@@ -707,9 +978,18 @@ function Footer() {
             © 2026 Vouchr by Novaforge Labs. Operating in Dantewada, Sukma &amp; Bijapur, Chhattisgarh.
           </p>
           <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
-            <Link to="/privacy" style={{ color: COLORS.cyan, textDecoration: "none" }}>Privacy Policy</Link>
-            <Link to="/terms" style={{ color: COLORS.cyan, textDecoration: "none" }}>Terms & Conditions</Link>
-            <Link to="/what-we-do" style={{ color: COLORS.cyan, textDecoration: "none" }}>What We Do</Link>
+            <Link to="/privacy" style={{ color: COLORS.cyan, textDecoration: "none", transition: "opacity 0.3s ease" }}
+              onMouseEnter={(e) => e.currentTarget.style.opacity = "0.7"}
+              onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
+            >Privacy Policy</Link>
+            <Link to="/terms" style={{ color: COLORS.cyan, textDecoration: "none", transition: "opacity 0.3s ease" }}
+              onMouseEnter={(e) => e.currentTarget.style.opacity = "0.7"}
+              onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
+            >Terms & Conditions</Link>
+            <Link to="/what-we-do" style={{ color: COLORS.cyan, textDecoration: "none", transition: "opacity 0.3s ease" }}
+              onMouseEnter={(e) => e.currentTarget.style.opacity = "0.7"}
+              onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
+            >What We Do</Link>
           </div>
         </div>
       </div>
@@ -725,6 +1005,8 @@ function Homepage() {
         href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap"
         rel="stylesheet"
       />
+      <link rel="icon" type="image/png" href={favicon} />
+      <ThreeBackground />
       <Nav />
       <Hero />
       <Divider />
