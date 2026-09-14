@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
-import heroImage from "./assets/hero.jpg";
+import heroImage from "../assets/hero.jpg";
 
 /* ========================= THEME ========================= */
 const COLORS = {
