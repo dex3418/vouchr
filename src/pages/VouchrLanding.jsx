@@ -377,7 +377,7 @@ function Hero() {
             <a href="#register" className="primary-btn">
               Register as Individual
             </a>
-            <a href="#register" className="secondary-btn">
+            <a href="https://forms.gle/PzFgu9TKxSdw1rLW9" className="secondary-btn">
               Register Your Platform
             </a>
           </div>
