@@ -56,6 +56,19 @@ const platformSteps = [
   "Go live on network",
 ];
 
+/* ===== REGISTRATION LINKS: replace these three with your own form links ===== */
+const REGISTER_LINKS = {
+  platform: "https://docs.google.com/forms/d/1EYPpBse1_zDU6kW5Ei3tL_4gAdYpm85oi7rYRFv6BiA/viewform",
+  skillLearner: "https://docs.google.com/forms/d/1Qdj1PktlPfbrB77jUyFjAdeK4MQmvYQBdx08fdirGkI/viewform",
+  jobSeeker: "https://docs.google.com/forms/d/1JZtA8baPGeN-VX34aCUgqzFccoG8fAI5gwrAHSl39YU/viewform",
+};
+
+const registerButtons = [
+  { label: "Register as Platform", href: REGISTER_LINKS.platform },
+  { label: "Register as Skill Learner", href: REGISTER_LINKS.skillLearner },
+  { label: "Register as Job Seeker", href: REGISTER_LINKS.jobSeeker },
+];
+
 /* ========================= GLOBAL STYLES ========================= */
 function GlobalStyles() {
   return (
@@ -618,9 +631,8 @@ function CTASection() {
               fontSize: 16,
             }}
           >
-            Join the Vouchr network and become part of a district-first
-            ecosystem connecting people, opportunities, and verified local
-            platforms.
+            Pick the option that fits you and fill a short form. Our team will
+            contact you on the details you share.
           </p>
 
           <div
@@ -629,34 +641,34 @@ function CTASection() {
               justifyContent: "center",
               flexWrap: "wrap",
               gap: 14,
+              marginBottom: 30,
             }}
           >
-            <a
-              href="mailto:devashishmarkam5@gmail.com"
-              style={{
-                background: C.white,
-                color: C.core,
-                padding: "15px 22px",
-                borderRadius: 12,
-                fontWeight: 800,
-              }}
-            >
-              Contact Team
-            </a>
-            <a
-              href="mailto:devashishmarkam5@gmail.com?subject=Register%20with%20Vouchr"
-              style={{
-                background: "rgba(255,255,255,0.12)",
-                color: C.white,
-                border: "1px solid rgba(255,255,255,0.2)",
-                padding: "15px 22px",
-                borderRadius: 12,
-                fontWeight: 800,
-              }}
-            >
-              Register Now
-            </a>
+            {registerButtons.map((btn) => (
+              <a
+                key={btn.label}
+                href={btn.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  background: C.white,
+                  color: C.core,
+                  padding: "15px 24px",
+                  borderRadius: 12,
+                  fontWeight: 800,
+                }}
+              >
+                {btn.label}
+              </a>
+            ))}
           </div>
+
+          <a
+            href="mailto:devashishmarkam5@gmail.com"
+            style={{ color: C.white, fontWeight: 700, opacity: 0.95 }}
+          >
+            Questions? Contact the team
+          </a>
         </GlassCard>
       </div>
     </section>
