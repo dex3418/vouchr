@@ -1,25 +1,19 @@
 import { useMemo } from "react";
-import { Link } from "react-router-dom";
 import heroImage from "../assets/hero.jpg";
 
 /* ========================= THEME ========================= */
-const COLORS = {
+const C = {
   core: "#22508A",
   slate: "#3A82C4",
   cyan: "#00C2FF",
   white: "#FFFFFF",
   offwhite: "#F8F9FA",
   border: "#E2EAF4",
-  textDark: "#0F1A2B",
-  textMid: "#3D5270",
-  textLight: "#6B7FA3",
+  text: "#0F1A2B",
+  mid: "#3D5270",
+  light: "#6B7FA3",
 };
-
-const SPACING = {
-  section: "72px 20px",
-  container: 1120,
-  radius: 18,
-};
+const MAX_W = 1120;
 
 /* ========================= DATA ========================= */
 const platforms = [
@@ -50,13 +44,11 @@ const platformCodes = [
 ];
 
 const districts = ["Dantewada", "Sukma", "Bijapur"];
-
 const individualSteps = [
   "Fill registration form",
   "Our team contacts you",
   "Get connected locally",
 ];
-
 const platformSteps = [
   "Register your platform",
   "Verification process",
@@ -68,81 +60,43 @@ function GlobalStyles() {
   return (
     <style>{`
       * { box-sizing: border-box; }
-
-      html {
-        scroll-behavior: smooth;
-      }
-
+      html { scroll-behavior: smooth; }
       body {
         margin: 0;
-        padding: 0;
-        background: ${COLORS.white};
+        background: ${C.white};
         font-family: 'DM Sans', 'Segoe UI', sans-serif;
-        color: ${COLORS.textDark};
+        color: ${C.text};
         overflow-x: hidden;
       }
-
-      a {
-        text-decoration: none;
+      a { text-decoration: none; }
+      img { display: block; }
+      a:focus-visible, button:focus-visible {
+        outline: 3px solid ${C.cyan};
+        outline-offset: 3px;
       }
 
-      img {
-        display: block;
-      }
-
-      .container {
-        width: 100%;
-        max-width: ${SPACING.container}px;
-        margin: 0 auto;
-      }
-
-      .section {
-        padding: ${SPACING.section};
-        position: relative;
-        z-index: 2;
-      }
-
-      .section-alt {
-        background: ${COLORS.offwhite};
-      }
+      .container { width: 100%; max-width: ${MAX_W}px; margin: 0 auto; }
+      .section { padding: 72px 20px; position: relative; z-index: 2; }
+      .section-alt { background: ${C.offwhite}; }
 
       .section-label {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 6px 14px;
-        border-radius: 999px;
-        background: rgba(34, 80, 138, 0.08);
-        color: ${COLORS.core};
-        font-size: 12px;
-        font-weight: 700;
-        letter-spacing: 0.5px;
-        text-transform: uppercase;
-        margin-bottom: 18px;
+        display: inline-flex; align-items: center; gap: 8px;
+        padding: 6px 14px; border-radius: 999px;
+        background: rgba(34,80,138,0.08); color: ${C.core};
+        font-size: 12px; font-weight: 700; letter-spacing: 0.5px;
+        text-transform: uppercase; margin-bottom: 18px;
       }
-
       .section-label::before {
-        content: '';
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: ${COLORS.cyan};
+        content: ''; width: 8px; height: 8px;
+        border-radius: 50%; background: ${C.cyan};
       }
-
       .section-title {
-        font-size: clamp(28px, 5vw, 44px);
-        line-height: 1.15;
-        font-weight: 800;
-        letter-spacing: -1px;
-        margin: 0 0 14px;
+        font-size: clamp(28px, 5vw, 44px); line-height: 1.15;
+        font-weight: 800; letter-spacing: -1px; margin: 0 0 14px;
       }
-
       .section-subtitle {
-        font-size: 16px;
-        line-height: 1.7;
-        color: ${COLORS.textMid};
-        margin: 0;
-        max-width: 700px;
+        font-size: 16px; line-height: 1.7; color: ${C.mid};
+        margin: 0; max-width: 700px;
       }
 
       .glass-card {
@@ -150,179 +104,73 @@ function GlobalStyles() {
         border: 1px solid rgba(255,255,255,0.4);
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
-        border-radius: ${SPACING.radius}px;
-        transition: all 0.28s ease;
+        border-radius: 18px;
+        transition: transform 0.28s ease, box-shadow 0.28s ease, background 0.28s ease;
       }
-
       .glass-card:hover {
         transform: translateY(-6px);
         box-shadow: 0 20px 50px rgba(34,80,138,0.12);
         background: rgba(255,255,255,0.9);
       }
 
-      .primary-btn {
-        background: ${COLORS.core};
-        color: white;
-        border-radius: 12px;
-        padding: 15px 22px;
-        font-weight: 700;
-        transition: all 0.25s ease;
-        display: inline-flex;
-        justify-content: center;
-        align-items: center;
-        border: none;
-        cursor: pointer;
+      .primary-btn, .secondary-btn {
+        border-radius: 12px; padding: 15px 22px; font-weight: 700;
+        display: inline-flex; justify-content: center; align-items: center;
+        transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
       }
-
-      .primary-btn:hover {
+      .primary-btn { background: ${C.core}; color: ${C.white}; border: none; cursor: pointer; }
+      .secondary-btn { background: transparent; color: ${C.core}; border: 2px solid ${C.core}; }
+      .primary-btn:hover, .secondary-btn:hover {
         transform: translateY(-3px);
         box-shadow: 0 18px 30px rgba(34,80,138,0.28);
       }
-
-      .secondary-btn {
-        background: transparent;
-        color: ${COLORS.core};
-        border: 2px solid ${COLORS.core};
-        border-radius: 12px;
-        padding: 15px 22px;
-        font-weight: 700;
-        transition: all 0.25s ease;
-        display: inline-flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .secondary-btn:hover {
-        background: ${COLORS.core};
-        color: white;
-        transform: translateY(-3px);
-        box-shadow: 0 18px 30px rgba(34,80,138,0.28);
-      }
+      .secondary-btn:hover { background: ${C.core}; color: ${C.white}; }
 
       .floating-shape {
-        position: absolute;
-        border-radius: 999px;
-        opacity: 0.06;
+        position: absolute; border-radius: 999px; opacity: 0.06;
         animation: float 10s ease-in-out infinite;
       }
-
-      .shape-1 {
-        width: 320px;
-        height: 320px;
-        background: ${COLORS.core};
-        top: -120px;
-        left: 8%;
-      }
-
-      .shape-2 {
-        width: 220px;
-        height: 220px;
-        background: ${COLORS.cyan};
-        right: 5%;
-        top: 40%;
-        animation-delay: 2s;
-      }
-
-      .shape-3 {
-        width: 260px;
-        height: 260px;
-        background: ${COLORS.slate};
-        bottom: -100px;
-        left: 50%;
-        animation-delay: 4s;
-      }
+      .shape-1 { width: 320px; height: 320px; background: ${C.core}; top: -120px; left: 8%; }
+      .shape-2 { width: 220px; height: 220px; background: ${C.cyan}; right: 5%; top: 40%; animation-delay: 2s; }
+      .shape-3 { width: 260px; height: 260px; background: ${C.slate}; bottom: -100px; left: 50%; animation-delay: 4s; }
 
       @keyframes float {
-        0%, 100% {
-          transform: translateY(0px) translateX(0px);
-        }
-        50% {
-          transform: translateY(-35px) translateX(12px);
-        }
+        0%, 100% { transform: translate(0, 0); }
+        50% { transform: translate(12px, -35px); }
       }
-
       @keyframes fadeUp {
-        from {
-          opacity: 0;
-          transform: translateY(30px);
-        }
-
-        to {
-          opacity: 1;
-          transform: translateY(0px);
-        }
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
       }
+      .fade-up { animation: fadeUp 0.8s ease forwards; }
 
-      .fade-up {
-        animation: fadeUp 0.8s ease forwards;
-      }
+      .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
+      .grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+      .stack { display: flex; flex-direction: column; gap: 18px; }
+      .divider { height: 1px; background: ${C.border}; margin: 0 auto; max-width: ${MAX_W}px; }
 
-      .grid-2 {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 28px;
-      }
-
-      .grid-3 {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 22px;
-      }
-
-      .stack {
-        display: flex;
-        flex-direction: column;
-        gap: 18px;
-      }
-
-      .divider {
-        height: 1px;
-        background: ${COLORS.border};
-        margin: 0 auto;
-        max-width: ${SPACING.container}px;
-      }
-
-      .footer-link {
-        color: ${COLORS.textLight};
-        transition: all 0.2s ease;
-      }
-
-      .footer-link:hover {
-        color: ${COLORS.core};
-      }
+      .footer-link { color: ${C.light}; transition: color 0.2s ease; }
+      .footer-link:hover { color: ${C.core}; }
 
       @media (max-width: 860px) {
-        .grid-2,
-        .grid-3 {
-          grid-template-columns: 1fr;
-        }
+        .grid-2, .grid-3 { grid-template-columns: 1fr; }
+        .hero-content { text-align: center; }
+        .hero-buttons { width: 100%; }
+        .hero-buttons a { width: 100%; }
+        .hero-image { height: 340px !important; }
+        .nav-wrapper { padding: 0 14px !important; }
+      }
 
-        .hero-content {
-          text-align: center;
-        }
-
-        .hero-buttons {
-          width: 100%;
-        }
-
-        .hero-buttons a {
-          width: 100%;
-        }
-
-        .hero-image {
-          max-width: 100%;
-          height: 340px !important;
-        }
-
-        .nav-wrapper {
-          padding: 0 14px !important;
-        }
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        .floating-shape, .fade-up { animation: none; }
+        .glass-card, .primary-btn, .secondary-btn { transition: none; }
       }
     `}</style>
   );
 }
 
-/* ========================= REUSABLE COMPONENTS ========================= */
+/* ========================= REUSABLE ========================= */
 function SectionHeading({ label, title, subtitle, centered = false }) {
   return (
     <div style={{ textAlign: centered ? "center" : "left" }}>
@@ -330,7 +178,7 @@ function SectionHeading({ label, title, subtitle, centered = false }) {
       <h2 className="section-title">{title}</h2>
       <p
         className="section-subtitle"
-        style={{ margin: centered ? "0 auto" : "0" }}
+        style={{ margin: centered ? "0 auto" : 0 }}
       >
         {subtitle}
       </p>
@@ -338,7 +186,7 @@ function SectionHeading({ label, title, subtitle, centered = false }) {
   );
 }
 
-function GlassCard({ children, style = {} }) {
+function GlassCard({ children, style }) {
   return (
     <div className="glass-card" style={style}>
       {children}
@@ -348,20 +196,14 @@ function GlassCard({ children, style = {} }) {
 
 function StepItem({ number, text }) {
   return (
-    <div
-      style={{
-        display: "flex",
-        gap: 14,
-        alignItems: "flex-start",
-      }}
-    >
+    <div style={{ display: "flex", gap: 14, alignItems: "flex-start" }}>
       <div
         style={{
           width: 32,
           height: 32,
           borderRadius: "50%",
-          background: COLORS.core,
-          color: COLORS.white,
+          background: C.core,
+          color: C.white,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -373,25 +215,27 @@ function StepItem({ number, text }) {
       >
         {number}
       </div>
-
-      <p
-        style={{
-          margin: 0,
-          color: COLORS.textMid,
-          lineHeight: 1.7,
-          fontSize: 15,
-        }}
-      >
+      <p style={{ margin: 0, color: C.mid, lineHeight: 1.7, fontSize: 15 }}>
         {text}
       </p>
     </div>
   );
 }
 
+const cardLabel = {
+  fontSize: 13,
+  fontWeight: 800,
+  letterSpacing: "1px",
+  color: C.core,
+  textTransform: "uppercase",
+  margin: "0 0 26px",
+};
+
 /* ========================= BACKGROUND ========================= */
 function AnimatedBackground() {
   return (
     <div
+      aria-hidden="true"
       style={{
         position: "fixed",
         inset: 0,
@@ -420,7 +264,7 @@ function NavBar() {
         backdropFilter: "blur(14px)",
         WebkitBackdropFilter: "blur(14px)",
         background: "rgba(255,255,255,0.82)",
-        borderBottom: `1px solid ${COLORS.border}`,
+        borderBottom: `1px solid ${C.border}`,
       }}
     >
       <div
@@ -433,43 +277,38 @@ function NavBar() {
           padding: "0 20px",
         }}
       >
-        <Link
-          to="/"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 12,
-          }}
+        <a
+          href="/"
+          style={{ display: "flex", alignItems: "center", gap: 12 }}
         >
           <span
             style={{
               fontSize: 28,
               fontWeight: 800,
-              color: COLORS.core,
+              color: C.core,
               letterSpacing: "-1px",
             }}
           >
             Vouchr
           </span>
-
           <span
             style={{
               fontSize: 11,
               fontWeight: 700,
               padding: "4px 8px",
               borderRadius: 999,
-              background: COLORS.offwhite,
-              border: `1px solid ${COLORS.border}`,
-              color: COLORS.textLight,
+              background: C.offwhite,
+              border: `1px solid ${C.border}`,
+              color: C.light,
               textTransform: "uppercase",
               letterSpacing: "0.6px",
             }}
           >
             by Novaforge Labs
           </span>
-        </Link>
+        </a>
 
-        <a href="#register" className="primary-btn" aria-label="Register">
+        <a href="#register" className="primary-btn">
           Register
         </a>
       </div>
@@ -500,12 +339,12 @@ function Hero() {
             <br />
             real opportunities.
             <br />
-            <span style={{ color: COLORS.core }}>apne district mein.</span>
+            <span style={{ color: C.core }}>apne district mein.</span>
           </h1>
 
           <p
             style={{
-              color: COLORS.textMid,
+              color: C.mid,
               lineHeight: 1.8,
               fontSize: 17,
               marginBottom: 34,
@@ -519,16 +358,11 @@ function Hero() {
 
           <div
             className="hero-buttons"
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-              gap: 14,
-            }}
+            style={{ display: "flex", flexWrap: "wrap", gap: 14 }}
           >
             <a href="#register" className="primary-btn">
               Register as Individual
             </a>
-
             <a href="#register" className="secondary-btn">
               Register Your Platform
             </a>
@@ -536,12 +370,7 @@ function Hero() {
         </div>
 
         <div className="fade-up">
-          <GlassCard
-            style={{
-              padding: 10,
-              overflow: "hidden",
-            }}
-          >
+          <GlassCard style={{ padding: 10, overflow: "hidden" }}>
             <img
               src={heroImage}
               alt="People networking through the Vouchr platform"
@@ -575,20 +404,15 @@ function WhatWeDo() {
           {platforms.map((item) => (
             <GlassCard
               key={item.code}
-              style={{
-                padding: 28,
-                borderBottom: `4px solid ${COLORS.core}`,
-              }}
+              style={{ padding: 28, borderBottom: `4px solid ${C.core}` }}
             >
               <div
                 style={{
                   display: "inline-flex",
-                  alignItems: "center",
-                  justifyContent: "center",
                   padding: "6px 12px",
                   borderRadius: 10,
-                  background: COLORS.core,
-                  color: COLORS.white,
+                  background: C.core,
+                  color: C.white,
                   fontWeight: 800,
                   fontSize: 12,
                   letterSpacing: "1px",
@@ -597,23 +421,8 @@ function WhatWeDo() {
               >
                 {item.code}
               </div>
-
-              <h3
-                style={{
-                  margin: "0 0 12px",
-                  fontSize: 20,
-                }}
-              >
-                {item.label}
-              </h3>
-
-              <p
-                style={{
-                  margin: 0,
-                  color: COLORS.textMid,
-                  lineHeight: 1.8,
-                }}
-              >
+              <h3 style={{ margin: "0 0 12px", fontSize: 20 }}>{item.label}</h3>
+              <p style={{ margin: 0, color: C.mid, lineHeight: 1.8 }}>
                 {item.desc}
               </p>
             </GlassCard>
@@ -626,6 +435,11 @@ function WhatWeDo() {
 
 /* ========================= HOW IT WORKS ========================= */
 function HowItWorks() {
+  const columns = [
+    { title: "For Individuals", steps: individualSteps },
+    { title: "For Platforms", steps: platformSteps },
+  ];
+
   return (
     <section className="section">
       <div className="container">
@@ -636,49 +450,16 @@ function HowItWorks() {
         />
 
         <div className="grid-2" style={{ marginTop: 40 }}>
-          <GlassCard style={{ padding: 30 }}>
-            <p
-              style={{
-                fontSize: 13,
-                fontWeight: 800,
-                letterSpacing: "1px",
-                color: COLORS.core,
-                textTransform: "uppercase",
-                marginTop: 0,
-                marginBottom: 26,
-              }}
-            >
-              For Individuals
-            </p>
-
-            <div className="stack">
-              {individualSteps.map((step, index) => (
-                <StepItem key={step} number={index + 1} text={step} />
-              ))}
-            </div>
-          </GlassCard>
-
-          <GlassCard style={{ padding: 30 }}>
-            <p
-              style={{
-                fontSize: 13,
-                fontWeight: 800,
-                letterSpacing: "1px",
-                color: COLORS.core,
-                textTransform: "uppercase",
-                marginTop: 0,
-                marginBottom: 26,
-              }}
-            >
-              For Platforms
-            </p>
-
-            <div className="stack">
-              {platformSteps.map((step, index) => (
-                <StepItem key={step} number={index + 1} text={step} />
-              ))}
-            </div>
-          </GlassCard>
+          {columns.map((col) => (
+            <GlassCard key={col.title} style={{ padding: 30 }}>
+              <p style={cardLabel}>{col.title}</p>
+              <div className="stack">
+                {col.steps.map((step, i) => (
+                  <StepItem key={step} number={i + 1} text={step} />
+                ))}
+              </div>
+            </GlassCard>
+          ))}
         </div>
       </div>
     </section>
@@ -696,12 +477,7 @@ function PlatformCodes() {
           subtitle="Verified platforms carry a V-prefix after background checks and manual validation."
         />
 
-        <div
-          className="stack"
-          style={{
-            marginTop: 36,
-          }}
-        >
+        <div className="stack" style={{ marginTop: 36 }}>
           {platformCodes.map((item) => (
             <GlassCard
               key={item.code}
@@ -728,25 +504,16 @@ function PlatformCodes() {
                     textAlign: "center",
                     borderRadius: 10,
                     padding: "8px 14px",
-                    background: item.verified ? COLORS.core : COLORS.offwhite,
-                    color: item.verified ? COLORS.white : COLORS.textDark,
+                    background: item.verified ? C.core : C.offwhite,
+                    color: item.verified ? C.white : C.text,
                     fontWeight: 800,
                     letterSpacing: "1px",
-                    border: item.verified
-                      ? "none"
-                      : `1px solid ${COLORS.border}`,
+                    border: item.verified ? "none" : `1px solid ${C.border}`,
                   }}
                 >
                   {item.code}
                 </div>
-
-                <p
-                  style={{
-                    margin: 0,
-                    color: COLORS.textMid,
-                    lineHeight: 1.7,
-                  }}
-                >
+                <p style={{ margin: 0, color: C.mid, lineHeight: 1.7 }}>
                   {item.desc}
                 </p>
               </div>
@@ -755,7 +522,7 @@ function PlatformCodes() {
                 <div
                   style={{
                     background: "#E8F4FF",
-                    color: COLORS.core,
+                    color: C.core,
                     padding: "6px 12px",
                     borderRadius: 999,
                     fontWeight: 700,
@@ -801,17 +568,10 @@ function DistrictCoverage() {
                 padding: "22px 34px",
                 minWidth: 180,
                 textAlign: "center",
-                borderBottom: `4px solid ${COLORS.core}`,
+                borderBottom: `4px solid ${C.core}`,
               }}
             >
-              <h3
-                style={{
-                  margin: 0,
-                  fontSize: 22,
-                }}
-              >
-                {district}
-              </h3>
+              <h3 style={{ margin: 0, fontSize: 22 }}>{district}</h3>
             </GlassCard>
           ))}
         </div>
@@ -831,7 +591,7 @@ function CTASection() {
             textAlign: "center",
             background:
               "linear-gradient(135deg, rgba(34,80,138,0.9), rgba(58,130,196,0.92))",
-            color: COLORS.white,
+            color: C.white,
           }}
         >
           <h2
@@ -873,8 +633,8 @@ function CTASection() {
             <a
               href="mailto:hello@vouchr.in"
               style={{
-                background: COLORS.white,
-                color: COLORS.core,
+                background: C.white,
+                color: C.core,
                 padding: "15px 22px",
                 borderRadius: 12,
                 fontWeight: 800,
@@ -882,12 +642,11 @@ function CTASection() {
             >
               Contact Team
             </a>
-
             <a
-              href="#"
+              href="mailto:hello@vouchr.in?subject=Register%20with%20Vouchr"
               style={{
                 background: "rgba(255,255,255,0.12)",
-                color: COLORS.white,
+                color: C.white,
                 border: "1px solid rgba(255,255,255,0.2)",
                 padding: "15px 22px",
                 borderRadius: 12,
@@ -909,11 +668,7 @@ function Footer() {
 
   return (
     <footer
-      style={{
-        padding: "34px 20px",
-        position: "relative",
-        zIndex: 2,
-      }}
+      style={{ padding: "34px 20px", position: "relative", zIndex: 2 }}
     >
       <div
         className="container"
@@ -926,40 +681,21 @@ function Footer() {
         }}
       >
         <div>
-          <h3
-            style={{
-              margin: "0 0 6px",
-              fontSize: 22,
-              color: COLORS.core,
-            }}
-          >
+          <h3 style={{ margin: "0 0 6px", fontSize: 22, color: C.core }}>
             Vouchr
           </h3>
-
-          <p
-            style={{
-              margin: 0,
-              color: COLORS.textLight,
-              lineHeight: 1.7,
-            }}
-          >
+          <p style={{ margin: 0, color: C.light, lineHeight: 1.7 }}>
             © {year} Novaforge Labs. Built for district-level opportunities.
           </p>
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            gap: 20,
-            flexWrap: "wrap",
-          }}
-        >
-          <Link className="footer-link" to="/privacy-policy">
+        <div style={{ display: "flex", gap: 20, flexWrap: "wrap" }}>
+          <a className="footer-link" href="/privacy">
             Privacy Policy
-          </Link>
-          <Link className="footer-link" to="/terms">
+          </a>
+          <a className="footer-link" href="/terms">
             Terms of Service
-          </Link>
+          </a>
           <a className="footer-link" href="mailto:hello@vouchr.in">
             Contact
           </a>
