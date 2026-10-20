@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import Seo from "../components/seo/Seo.jsx";
 
 const COLORS = {
   core: "#22508A",
@@ -14,6 +15,8 @@ const COLORS = {
 
 export default function TermsConditions() {
   return (
+    <>
+      <Seo title="Terms of Service" description="The terms for using Vouchr." canonicalPath="/terms" />
     <div style={{ fontFamily: "'DM Sans', 'Segoe UI', sans-serif", color: COLORS.textDark }}>
       <link
         href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap"
@@ -174,6 +177,7 @@ export default function TermsConditions() {
         </div>
       </footer>
     </div>
+    </>
   );
 }
 

@@ -1,0 +1,108 @@
+// All page text in English and Hindi. Edit here, nowhere else.
+export const content = {
+  en: {
+    nav: { register: "Register", registerNow: "Register" },
+    hero: {
+      label: "Dantewada · Sukma · Bijapur",
+      lines: ["real people.", "real opportunities.", "apne district mein."],
+      sub: "Vouchr connects learners, job seekers, businesses, and local opportunities inside Bastar division through one connected network.",
+      job: "I am looking for a job",
+      skill: "I want to learn a skill",
+      platform: "Register your platform or business",
+      whatsapp: "Chat on WhatsApp",
+      note: "Short form · Our team will contact you · Ages 18 and above",
+      imageAlt: "Illustration of a person on a rising growth arrow",
+    },
+    audiences: {
+      label: "Who it is for",
+      title: "One network. Three ways to join.",
+      sub: "Pick the one that fits you and fill a short form.",
+      items: [
+        { key: "job", code: "JR", title: "Job Seekers", desc: "Match with verified employers, contractors, and district-level recruitment opportunities.", cta: "Register as Job Seeker" },
+        { key: "skill", code: "SLP", title: "Skill Learners", desc: "Connect with vocational training institutes, skill educators, and local learning programs in your district.", cta: "Register as Skill Learner" },
+        { key: "platform", code: "B", title: "Platforms and Businesses", desc: "Training institutes, employers and local businesses: list your platform and reach people in your district.", cta: "Register your Platform" },
+      ],
+    },
+    how: {
+      label: "How it works",
+      title: "Simple. Fast. Local.",
+      sub: "Designed for district-level accessibility without complicated onboarding.",
+      individuals: { title: "For individuals", steps: ["Fill registration form", "Our team contacts you", "Get connected locally"] },
+      platforms: { title: "For platforms", steps: ["Register your platform", "Verification process", "Go live on network"] },
+    },
+    verified: {
+      label: "Platform codes",
+      title: "Look for the V",
+      sub: "Platforms with a V in their code are verified through background checks and manual validation.",
+      listed: { title: "Listed", text: "On Vouchr, not yet verified", codes: ["SLP", "JR", "B"] },
+      verified: { title: "Verified", text: "Verified Skill Learning, Job Recruitment and Business Listing", codes: ["VSLP", "VJR", "VB"] },
+      key: "SLP: Skill Learning Platform · JR: Job Recruitment · B: Business Listing",
+    },
+    districts: {
+      label: "Coverage",
+      title: "Districts we cover",
+      sub: "Operating exclusively inside Bastar division with district-first community networking.",
+      names: ["Dantewada", "Sukma", "Bijapur"],
+    },
+    cta: {
+      title: ["Build locally.", "Grow collectively."],
+      text: "Pick the option that fits you and fill a short form. Our team will contact you on the details you share.",
+      questions: "Questions? Contact the team",
+      whatsapp: "Chat on WhatsApp",
+    },
+    footer: { tagline: "Built for district-level opportunities.", privacy: "Privacy Policy", terms: "Terms of Service", contact: "Contact" },
+  },
+
+  hi: {
+    nav: { register: "रजिस्टर करें", registerNow: "रजिस्टर करें" },
+    hero: {
+      label: "दंतेवाड़ा · सुकमा · बीजापुर",
+      lines: ["असली लोग।", "असली मौके।", "अपने ज़िले में।"],
+      sub: "Vouchr बस्तर संभाग में सीखने वालों, नौकरी खोजने वालों, व्यवसायों और स्थानीय अवसरों को एक नेटवर्क से जोड़ता है।",
+      job: "मुझे नौकरी चाहिए",
+      skill: "मुझे कोई हुनर सीखना है",
+      platform: "अपना प्लेटफ़ॉर्म या व्यवसाय जोड़ें",
+      whatsapp: "व्हाट्सऐप पर बात करें",
+      note: "छोटा फ़ॉर्म · हमारी टीम आपसे संपर्क करेगी · उम्र 18 वर्ष या अधिक",
+      imageAlt: "ऊपर बढ़ते तीर पर सवार व्यक्ति का चित्र",
+    },
+    audiences: {
+      label: "यह किसके लिए है",
+      title: "एक नेटवर्क। जुड़ने के तीन तरीके।",
+      sub: "अपने लिए सही विकल्प चुनें और एक छोटा फ़ॉर्म भरें।",
+      items: [
+        { key: "job", code: "JR", title: "नौकरी खोजने वाले", desc: "सत्यापित नियोक्ताओं, ठेकेदारों और ज़िला-स्तरीय भर्ती के अवसरों से जुड़ें।", cta: "नौकरी खोजने वाले के रूप में रजिस्टर करें" },
+        { key: "skill", code: "SLP", title: "हुनर सीखने वाले", desc: "अपने ज़िले के व्यावसायिक प्रशिक्षण संस्थानों, कौशल शिक्षकों और स्थानीय सीखने के कार्यक्रमों से जुड़ें।", cta: "हुनर सीखने वाले के रूप में रजिस्टर करें" },
+        { key: "platform", code: "B", title: "प्लेटफ़ॉर्म और व्यवसाय", desc: "प्रशिक्षण संस्थान, नियोक्ता और स्थानीय व्यवसाय: अपना प्लेटफ़ॉर्म जोड़ें और अपने ज़िले के लोगों तक पहुँचें।", cta: "अपना प्लेटफ़ॉर्म रजिस्टर करें" },
+      ],
+    },
+    how: {
+      label: "कैसे काम करता है",
+      title: "सरल। तेज़। स्थानीय।",
+      sub: "ज़िला स्तर पर आसानी के लिए बनाया गया, बिना किसी जटिल प्रक्रिया के।",
+      individuals: { title: "व्यक्तियों के लिए", steps: ["रजिस्ट्रेशन फ़ॉर्म भरें", "हमारी टीम आपसे संपर्क करेगी", "अपने इलाके में जुड़ें"] },
+      platforms: { title: "प्लेटफ़ॉर्म के लिए", steps: ["अपना प्लेटफ़ॉर्म रजिस्टर करें", "सत्यापन प्रक्रिया", "नेटवर्क पर लाइव हों"] },
+    },
+    verified: {
+      label: "प्लेटफ़ॉर्म कोड",
+      title: "V देखिए",
+      sub: "जिस कोड में V लगा हो, वह प्लेटफ़ॉर्म बैकग्राउंड जाँच और मैन्युअल सत्यापन से गुज़रा है।",
+      listed: { title: "सूचीबद्ध", text: "Vouchr पर मौजूद, अभी सत्यापित नहीं", codes: ["SLP", "JR", "B"] },
+      verified: { title: "सत्यापित", text: "सत्यापित कौशल शिक्षा, भर्ती और व्यवसाय सूची", codes: ["VSLP", "VJR", "VB"] },
+      key: "SLP: कौशल शिक्षा प्लेटफ़ॉर्म · JR: भर्ती · B: व्यवसाय सूची",
+    },
+    districts: {
+      label: "कवरेज",
+      title: "हम किन ज़िलों में हैं",
+      sub: "केवल बस्तर संभाग के भीतर, ज़िले को पहली प्राथमिकता देते हुए।",
+      names: ["दंतेवाड़ा", "सुकमा", "बीजापुर"],
+    },
+    cta: {
+      title: ["स्थानीय स्तर पर बनाएँ।", "मिलकर आगे बढ़ें।"],
+      text: "अपने लिए सही विकल्प चुनें और एक छोटा फ़ॉर्म भरें। हमारी टीम आपके दिए विवरण पर आपसे संपर्क करेगी।",
+      questions: "सवाल हैं? टीम से संपर्क करें",
+      whatsapp: "व्हाट्सऐप पर बात करें",
+    },
+    footer: { tagline: "ज़िला-स्तरीय अवसरों के लिए बनाया गया।", privacy: "गोपनीयता नीति", terms: "सेवा की शर्तें", contact: "संपर्क" },
+  },
+}
