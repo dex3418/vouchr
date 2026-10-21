@@ -2,6 +2,8 @@ import Seo from "../components/seo/Seo.jsx"
 import NavBar from "../components/layout/NavBar.jsx"
 import Footer from "../components/layout/Footer.jsx"
 import Hero from "../components/home/Hero.jsx"
+import Marquee from "../components/home/Marquee.jsx"
+import Voices from "../components/home/Voices.jsx"
 import Audiences from "../components/home/Audiences.jsx"
 import HowItWorks from "../components/home/HowItWorks.jsx"
 import VerifiedLegend from "../components/home/VerifiedLegend.jsx"
@@ -15,10 +17,12 @@ export default function Home() {
       <NavBar />
       <main>
         <Hero />
+        <Marquee />
         <Audiences />
         <HowItWorks />
         <VerifiedLegend />
         <Districts />
+        <Voices />
         <FinalCta />
       </main>
       <Footer />

@@ -7,6 +7,7 @@ export default function Footer() {
   const { t } = useLang()
   return (
     <footer className="footer">
+      <div className="band" aria-hidden="true" />
       <div className="container footer__inner">
         <div>
           <Wordmark className="footer__wm" />

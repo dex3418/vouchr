@@ -2,6 +2,8 @@
 export const content = {
   en: {
     nav: { register: "Register", registerNow: "Register" },
+    marquee: ["Jobs", "Skills", "Local business", "Dantewada", "Sukma", "Bijapur", "Bastar"],
+    voices: { label: "Voices", title: "From the network" },
     hero: {
       label: "Dantewada · Sukma · Bijapur",
       lines: ["real people.", "real opportunities.", "apne district mein."],
@@ -55,6 +57,8 @@ export const content = {
 
   hi: {
     nav: { register: "रजिस्टर करें", registerNow: "रजिस्टर करें" },
+    marquee: ["नौकरी", "हुनर", "स्थानीय कारोबार", "दंतेवाड़ा", "सुकमा", "बीजापुर", "बस्तर"],
+    voices: { label: "आवाज़ें", title: "नेटवर्क से" },
     hero: {
       label: "दंतेवाड़ा · सुकमा · बीजापुर",
       lines: ["असली लोग।", "असली मौके।", "अपने ज़िले में।"],
