@@ -11,7 +11,7 @@ export default function Hero() {
   return (
     <section className="hero">
       <div className="container hero__grid">
-        <div className="hero__copy fade-up">
+        <div className="hero__copy">
           <p className="pill">{h.label}</p>
           <h1 className="hero__title">
             {h.lines[0]}<br />
@@ -27,7 +27,7 @@ export default function Hero() {
           </div>
           <p className="hero__note">{h.note}</p>
         </div>
-        <div className="hero__media fade-up">
+        <div className="hero__media">
           <HeroMosaic />
         </div>
       </div>
