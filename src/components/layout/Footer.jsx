@@ -12,6 +12,7 @@ export default function Footer() {
         <div>
           <Wordmark className="footer__wm" />
           <p className="footer__text">© {new Date().getFullYear()} Novaforge Labs. {t.footer.tagline}</p>
+          <p className="footer__credit">{t.footer.maps} <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">© OpenStreetMap contributors</a></p>
         </div>
         <nav className="footer__links" aria-label="Footer">
           <Link to="/privacy">{t.footer.privacy}</Link>

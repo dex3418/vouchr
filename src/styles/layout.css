@@ -25,3 +25,6 @@
 .footer__links { display: flex; gap: 20px; flex-wrap: wrap; }
 .footer__links a { color: var(--mid); font-weight: 500; }
 .footer__links a:hover { color: var(--magenta-d); }
+
+.footer__credit { color: var(--light); margin-top: 4px; font-size: 0.82rem; }
+.footer__credit a { text-decoration: underline; text-underline-offset: 3px; }

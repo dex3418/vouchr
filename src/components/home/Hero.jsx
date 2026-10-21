@@ -1,7 +1,7 @@
 import { useLang } from "../../i18n/LanguageContext.jsx"
 import { FORMS } from "../../data/links.js"
 import WhatsAppButton from "../ui/WhatsAppButton.jsx"
-import HeroMosaic from "./HeroMosaic.jsx"
+import HeroMaps from "./HeroMaps.jsx"
 
 const out = { target: "_blank", rel: "noopener noreferrer" }
 
@@ -28,7 +28,7 @@ export default function Hero() {
           <p className="hero__note">{h.note}</p>
         </div>
         <div className="hero__media">
-          <HeroMosaic />
+          <HeroMaps />
         </div>
       </div>
     </section>

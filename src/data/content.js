@@ -52,7 +52,7 @@ export const content = {
       questions: "Questions? Contact the team",
       whatsapp: "Chat on WhatsApp",
     },
-    footer: { tagline: "Built for district-level opportunities.", privacy: "Privacy Policy", terms: "Terms of Service", contact: "Contact" },
+    footer: { maps: "Map data", tagline: "Built for district-level opportunities.", privacy: "Privacy Policy", terms: "Terms of Service", contact: "Contact" },
   },
 
   hi: {
@@ -107,6 +107,6 @@ export const content = {
       questions: "सवाल हैं? टीम से संपर्क करें",
       whatsapp: "व्हाट्सऐप पर बात करें",
     },
-    footer: { tagline: "ज़िला-स्तरीय अवसरों के लिए बनाया गया।", privacy: "गोपनीयता नीति", terms: "सेवा की शर्तें", contact: "संपर्क" },
+    footer: { maps: "नक्शा डेटा", tagline: "ज़िला-स्तरीय अवसरों के लिए बनाया गया।", privacy: "गोपनीयता नीति", terms: "सेवा की शर्तें", contact: "संपर्क" },
   },
 }
