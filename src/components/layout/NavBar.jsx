@@ -13,6 +13,7 @@ export default function NavBar() {
           <span className="nav__by">by Novaforge Labs</span>
         </Link>
         <div className="nav__right">
+          <Link to="/articles" className="nav__link">{t.nav.articles}</Link>
           <LanguageToggle />
           <a href="/#join" className="btn btn--magenta nav__cta">{t.nav.register}</a>
         </div>

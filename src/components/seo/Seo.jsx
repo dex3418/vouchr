@@ -15,16 +15,19 @@ function meta(attr, key, value) {
 }
 
 // Sets the tab title and meta tags for the current page. With no props it restores the Home defaults.
-export default function Seo({ title, description, canonicalPath }) {
+export default function Seo({ title, description, canonicalPath, type = "website", noindex = false, jsonLd }) {
   const { pathname } = useLocation()
+  const ld = jsonLd ? JSON.stringify(jsonLd) : ""
   useEffect(() => {
     const full = title ? `${title} | Vouchr` : DEFAULT_TITLE
     const desc = description || DEFAULT_DESC
     const url = window.location.origin + (canonicalPath || pathname)
     document.title = full
     meta("name", "description", desc)
+    meta("name", "robots", noindex ? "noindex, nofollow" : "index, follow, max-image-preview:large")
     meta("property", "og:title", full)
     meta("property", "og:description", desc)
+    meta("property", "og:type", type)
     meta("property", "og:url", url)
     meta("name", "twitter:title", full)
     meta("name", "twitter:description", desc)
@@ -35,6 +38,19 @@ export default function Seo({ title, description, canonicalPath }) {
       document.head.appendChild(c)
     }
     c.setAttribute("href", url)
-  }, [title, description, canonicalPath, pathname])
+    let script = document.getElementById("page-jsonld")
+    if (ld) {
+      if (!script) {
+        script = document.createElement("script")
+        script.id = "page-jsonld"
+        script.type = "application/ld+json"
+        document.head.appendChild(script)
+      }
+      script.textContent = ld
+    } else if (script) {
+      script.remove()
+    }
+    return () => document.getElementById("page-jsonld")?.remove()
+  }, [title, description, canonicalPath, type, noindex, pathname, ld])
   return null
 }

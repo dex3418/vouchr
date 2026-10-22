@@ -15,6 +15,7 @@ export default function Footer() {
           <p className="footer__credit">{t.footer.maps} <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">© OpenStreetMap contributors</a></p>
         </div>
         <nav className="footer__links" aria-label="Footer">
+          <Link to="/articles">{t.footer.articles}</Link>
           <Link to="/privacy">{t.footer.privacy}</Link>
           <Link to="/terms">{t.footer.terms}</Link>
           <a href="https://instagram.com/vouc.hr" target="_blank" rel="noopener noreferrer">Instagram</a>

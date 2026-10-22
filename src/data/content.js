@@ -1,7 +1,22 @@
 // All page text in English and Hindi. Edit here, nowhere else.
 export const content = {
   en: {
-    nav: { register: "Register", registerNow: "Register" },
+    nav: { register: "Register", registerNow: "Register", articles: "Articles" },
+    articles: {
+      label: "Guides",
+      title: "Guides and articles",
+      sub: "Practical help on jobs, skills and local business in Bastar.",
+      all: "All",
+      empty: "Articles are coming soon.",
+      loading: "Loading…",
+      error: "Could not load articles. Refresh to try again.",
+      back: "Back to articles",
+      read: "Read",
+      fallback: "No articles in this language yet. Showing articles in the other language.",
+      home: { label: "Guides", title: "Helpful guides", all: "See all articles" },
+      categories: { Jobs: "Jobs", Skills: "Skills", Business: "Business", Updates: "Updates" },
+      languages: { en: "English", hi: "Hindi" },
+    },
     marquee: ["Jobs", "Skills", "Local business", "Dantewada", "Sukma", "Bijapur", "Bastar"],
     voices: { label: "Voices", title: "From the network" },
     hero: {
@@ -52,11 +67,26 @@ export const content = {
       questions: "Questions? Contact the team",
       whatsapp: "Chat on WhatsApp",
     },
-    footer: { maps: "Map data", tagline: "Built for district-level opportunities.", privacy: "Privacy Policy", terms: "Terms of Service", contact: "Contact" },
+    footer: { articles: "Articles", maps: "Map data", tagline: "Built for district-level opportunities.", privacy: "Privacy Policy", terms: "Terms of Service", contact: "Contact" },
   },
 
   hi: {
-    nav: { register: "रजिस्टर करें", registerNow: "रजिस्टर करें" },
+    nav: { register: "रजिस्टर करें", registerNow: "रजिस्टर करें", articles: "लेख" },
+    articles: {
+      label: "गाइड",
+      title: "गाइड और लेख",
+      sub: "बस्तर में नौकरी, हुनर और स्थानीय कारोबार से जुड़ी काम की जानकारी।",
+      all: "सभी",
+      empty: "लेख जल्द आ रहे हैं।",
+      loading: "लोड हो रहा है…",
+      error: "लेख लोड नहीं हो सके। पेज रीफ़्रेश करें।",
+      back: "लेखों पर वापस जाएँ",
+      read: "पढ़ें",
+      fallback: "इस भाषा में अभी लेख नहीं हैं। दूसरी भाषा के लेख दिखाए जा रहे हैं।",
+      home: { label: "गाइड", title: "काम की जानकारी", all: "सभी लेख देखें" },
+      categories: { Jobs: "नौकरी", Skills: "हुनर", Business: "कारोबार", Updates: "अपडेट" },
+      languages: { en: "अंग्रेज़ी", hi: "हिंदी" },
+    },
     marquee: ["नौकरी", "हुनर", "स्थानीय कारोबार", "दंतेवाड़ा", "सुकमा", "बीजापुर", "बस्तर"],
     voices: { label: "आवाज़ें", title: "नेटवर्क से" },
     hero: {
@@ -107,6 +137,6 @@ export const content = {
       questions: "सवाल हैं? टीम से संपर्क करें",
       whatsapp: "व्हाट्सऐप पर बात करें",
     },
-    footer: { maps: "नक्शा डेटा", tagline: "ज़िला-स्तरीय अवसरों के लिए बनाया गया।", privacy: "गोपनीयता नीति", terms: "सेवा की शर्तें", contact: "संपर्क" },
+    footer: { articles: "लेख", maps: "नक्शा डेटा", tagline: "ज़िला-स्तरीय अवसरों के लिए बनाया गया।", privacy: "गोपनीयता नीति", terms: "सेवा की शर्तें", contact: "संपर्क" },
   },
 }
