@@ -40,3 +40,33 @@ export function buildSitemap(site, urls) {
   const rows = urls.map((u) => `  <url><loc>${xml(site + u.path)}</loc>${u.lastmod ? `<lastmod>${xml(u.lastmod.slice(0, 10))}</lastmod>` : ""}</url>`)
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${rows.join("\n")}\n</urlset>\n`
 }
+
+// Real content for the page body, so crawlers see text even before JavaScript runs. React replaces it when the app starts.
+export const withContent = (html, inner) => html.replace('<div id="root"></div>', () => `<div id="root">${inner}</div>`)
+
+const blockText = (b) => esc((b[b.type]?.rich_text || []).map((r) => r.plain_text).join(""))
+
+// Notion blocks to plain, simple HTML (text, headings, lists, quotes).
+export function blocksToHtml(blocks) {
+  const out = []
+  for (let i = 0; i < blocks.length; ) {
+    const b = blocks[i]
+    if (b.type === "bulleted_list_item" || b.type === "numbered_list_item") {
+      const tag = b.type === "bulleted_list_item" ? "ul" : "ol"
+      const items = []
+      while (i < blocks.length && blocks[i].type === b.type) items.push(`<li>${blockText(blocks[i++])}</li>`)
+      out.push(`<${tag}>${items.join("")}</${tag}>`)
+      continue
+    }
+    const t = blockText(b)
+    if (b.type === "paragraph" && t) out.push(`<p>${t}</p>`)
+    else if (b.type === "heading_1" && t) out.push(`<h2>${t}</h2>`)
+    else if (b.type === "heading_2" && t) out.push(`<h3>${t}</h3>`)
+    else if (b.type === "heading_3" && t) out.push(`<h4>${t}</h4>`)
+    else if (b.type === "quote" && t) out.push(`<blockquote>${t}</blockquote>`)
+    else if (b.type === "callout" && t) out.push(`<aside>${t}</aside>`)
+    else if (b.type === "divider") out.push("<hr>")
+    i++
+  }
+  return out.join("")
+}

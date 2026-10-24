@@ -63,11 +63,13 @@ export const getFile = (p) => {
 
 // Notion edits show up within about a minute or two. Notion file links expire after about an hour, so keep the cache well under that.
 export function send(res, data) {
+  res.setHeader("X-Robots-Tag", "noindex")
   res.setHeader("Cache-Control", "s-maxage=30, stale-while-revalidate=30")
   res.status(200).json(data)
 }
 
 export function fail(res, err) {
+  res.setHeader("X-Robots-Tag", "noindex")
   console.error(err)
   res.status(500).json({ error: "Could not load content" })
 }
