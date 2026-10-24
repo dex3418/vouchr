@@ -7,7 +7,9 @@ import { CONTACT_EMAIL } from "../data/links.js"
 const SECTIONS = [
   {
     title: "Information We Collect",
-    body: "We collect name, age, phone number, email, address, district, block, education, skills, and occupation details through our registration forms.",
+    intro: "We collect the following through our registration forms:",
+    list: ["Name, age, phone number, email, address, district and block", "Education, skills, and occupation details"],
+    outro: "When you visit our website, Google Analytics also collects general usage information such as pages viewed and device type. This does not include the details you submit in our registration forms.",
   },
   {
     title: "How We Use Your Information",

@@ -58,7 +58,12 @@ const SECTIONS = [
   },
   {
     title: "Cookie Policy",
-    body: "Vouchr website may use basic cookies for functionality purposes only. We do not use cookies for tracking or advertising.",
+    intro: "The Vouchr website uses:",
+    list: [
+      "Basic browser storage that keeps the site working, such as remembering your language choice",
+      "Google Analytics, which uses cookies to show us how visitors use the site, such as pages viewed and device type",
+    ],
+    outro: "We do not use this information to show you advertising or to identify you personally. You can block or delete cookies in your browser settings, and the site will still work.",
   },
   {
     title: "Dispute Resolution",
@@ -127,6 +132,7 @@ export default function TermsConditions() {
                     {s.list.map((item) => <li key={item}>{item}</li>)}
                   </ul>
                 )}
+                {s.outro && <p>{s.outro}</p>}
                 {s.contact && <p><WithEmail text={s.contact} /></p>}
               </div>
             </section>
