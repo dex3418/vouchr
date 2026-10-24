@@ -27,7 +27,7 @@ async function articleSlugs() {
   }
 }
 
-// Directory listing slugs for the sitemap. Empty until DIRECTORY_DB_ID is set and listings are published.
+// Directory listing slugs for the sitemap. Empty until listings are published in Notion.
 async function directorySlugs() {
   try {
     return (await loadDirectory()).map((x) => x.slug)

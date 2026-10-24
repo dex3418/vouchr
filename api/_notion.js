@@ -3,9 +3,7 @@ const VERSION = "2022-06-28"
 
 export const DB = {
   articles: "42a6bb268e244e7ab18af5ebf4175c0c",
-  // Directory database. Set the DIRECTORY_DB_ID environment variable once the Notion database exists.
-  // While it is empty, the directory simply shows "coming soon".
-  directory: process.env.DIRECTORY_DB_ID || "",
+  directory: "a2e3140c-caeb-49f6-8a1e-698ed1e5e1a4",
 }
 
 async function call(path, method, body) {
