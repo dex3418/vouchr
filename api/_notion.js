@@ -61,9 +61,9 @@ export const getFile = (p) => {
   return f ? f.file?.url || f.external?.url || "" : ""
 }
 
-// Notion file links expire after about an hour, so cache for less than that.
+// Notion edits show up within about a minute or two. Notion file links expire after about an hour, so keep the cache well under that.
 export function send(res, data) {
-  res.setHeader("Cache-Control", "s-maxage=300, stale-while-revalidate=300")
+  res.setHeader("Cache-Control", "s-maxage=30, stale-while-revalidate=30")
   res.status(200).json(data)
 }
 

@@ -1,15 +1,18 @@
+import { useState } from "react"
 import { Link } from "react-router-dom"
 import { useLang } from "../../i18n/LanguageContext.jsx"
 import { FEES, PROVIDERS, QUALS, label, typeCode } from "../../data/directory.js"
 
 const MAX_TAGS = 3
 
-// Logo from Notion, or the first letter of the name when there is no logo.
+// Logo from Notion, or the first letter of the name when there is no logo or the file is not an image.
 export function Logo({ logo, name, big }) {
-  return logo ? (
-    <img className={`dlogo ${big ? "dlogo--big" : ""}`} src={logo} alt="" loading="lazy" />
+  const [broken, setBroken] = useState(false)
+  const size = big ? "dlogo--big" : ""
+  return logo && !broken ? (
+    <img className={`dlogo ${size}`} src={logo} alt="" loading="lazy" onError={() => setBroken(true)} />
   ) : (
-    <span className={`dlogo dlogo--letter ${big ? "dlogo--big" : ""}`} aria-hidden="true">{(name || "?").trim().charAt(0).toUpperCase()}</span>
+    <span className={`dlogo dlogo--letter ${size}`} aria-hidden="true">{(name || "?").trim().charAt(0).toUpperCase()}</span>
   )
 }
 

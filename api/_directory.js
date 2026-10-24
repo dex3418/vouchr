@@ -14,7 +14,7 @@ export function buildListings(rows) {
   const used = new Set()
   const list = rows.map((r) => {
     const p = r.properties
-    const name = getText(p.Name)
+    const name = getText(p.Name).trim()
     const district = getSelect(p.District)
     const custom = slugify(getText(p.Slug))
     const nameSlug = slugify(name)
@@ -31,13 +31,13 @@ export function buildListings(rows) {
       type: getSelect(p["Platform Type"]),
       provider: getSelect(p.Provider),
       district,
-      location: getText(p.Location),
+      location: getText(p.Location).trim(),
       qualification: getNames(p.Qualification),
       subject: getNames(p.Subject),
       fee: getNames(p["Fee Structure"]),
       verified: getCheck(p.Verified),
       logo: getFile(p.Logo),
-      description: getText(p.Description),
+      description: getText(p.Description).trim(),
       applyUrl: getUrl(p["Apply Link"]),
     }
   })
