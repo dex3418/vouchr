@@ -27,7 +27,8 @@ export default function ArticleDetail() {
 
   return (
     <>
-      {data ? <Seo title={data.title} description={description} type="article" jsonLd={jsonLd} /> : <Seo title="Article" noindex />}
+      {/* While loading, leave the tags the server already sent. Only a missing or failed page is marked noindex. */}
+      {data ? <Seo title={data.title} description={description} type="article" jsonLd={jsonLd} /> : error ? <Seo title="Article" noindex /> : null}
       <NavBar />
       <main className="section">
         <article className="container article" lang={data ? data.language : undefined}>

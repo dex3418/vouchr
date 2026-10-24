@@ -37,7 +37,8 @@ export default function DirectoryDetail() {
 
   return (
     <>
-      {data ? <Seo title={data.name} description={description} type="website" jsonLd={jsonLd} /> : <Seo title="Directory listing" noindex />}
+      {/* While loading, leave the tags the server already sent. Only a missing or failed page is marked noindex. */}
+      {data ? <Seo title={data.name} description={description} type="website" jsonLd={jsonLd} /> : error ? <Seo title="Directory listing" noindex /> : null}
       <NavBar />
       <main className="section">
         <article className="container article">
