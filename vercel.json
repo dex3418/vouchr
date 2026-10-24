@@ -1,3 +1,10 @@
 {
-  "rewrites": [{ "source": "/((?!api/).*)", "destination": "/index.html" }]
+  "rewrites": [
+    { "source": "/sitemap.xml", "destination": "/api/sitemap" },
+    { "source": "/articles/:slug", "destination": "/api/page?kind=article&slug=:slug", "missing": [{ "type": "query", "key": "raw" }] },
+    { "source": "/directory/:slug", "destination": "/api/page?kind=listing&slug=:slug", "missing": [{ "type": "query", "key": "raw" }] },
+    { "source": "/articles", "destination": "/api/page?kind=articles", "missing": [{ "type": "query", "key": "raw" }] },
+    { "source": "/directory", "destination": "/api/page?kind=directory", "missing": [{ "type": "query", "key": "raw" }] },
+    { "source": "/((?!api/).*)", "destination": "/index.html" }
+  ]
 }

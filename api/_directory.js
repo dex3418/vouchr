@@ -39,6 +39,7 @@ export function buildListings(rows) {
       logo: getFile(p.Logo),
       description: getText(p.Description).trim(),
       applyUrl: getUrl(p["Apply Link"]),
+      updated: r.last_edited_time || "",
     }
   })
   // Verified first, then A to Z.
