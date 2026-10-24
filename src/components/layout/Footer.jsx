@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 import Wordmark from "../ui/Wordmark.jsx"
 import { useLang } from "../../i18n/LanguageContext.jsx"
-import { CONTACT_EMAIL } from "../../data/links.js"
+import { CONTACT_EMAIL, SHOW_DIRECTORY } from "../../data/links.js"
 
 export default function Footer() {
   const { t } = useLang()
@@ -15,6 +15,7 @@ export default function Footer() {
           <p className="footer__credit">{t.footer.maps} <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">© OpenStreetMap contributors</a></p>
         </div>
         <nav className="footer__links" aria-label="Footer">
+          {SHOW_DIRECTORY && <Link to="/directory">{t.footer.directory}</Link>}
           <Link to="/articles">{t.footer.articles}</Link>
           <Link to="/privacy">{t.footer.privacy}</Link>
           <Link to="/terms">{t.footer.terms}</Link>

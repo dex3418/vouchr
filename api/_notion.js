@@ -3,6 +3,9 @@ const VERSION = "2022-06-28"
 
 export const DB = {
   articles: "42a6bb268e244e7ab18af5ebf4175c0c",
+  // Directory database. Set the DIRECTORY_DB_ID environment variable once the Notion database exists.
+  // While it is empty, the directory simply shows "coming soon".
+  directory: process.env.DIRECTORY_DB_ID || "",
 }
 
 async function call(path, method, body) {
@@ -51,6 +54,9 @@ export const getText = (p) => (p?.title || p?.rich_text || []).map((t) => t.plai
 export const getUrl = (p) => p?.url || ""
 export const getSelect = (p) => p?.select?.name || ""
 export const getDate = (p) => p?.date?.start || ""
+// Works for both select and multi-select properties: always returns a list of option names.
+export const getNames = (p) => (p?.multi_select || (p?.select ? [p.select] : [])).map((o) => o.name)
+export const getCheck = (p) => p?.checkbox === true
 export const getRelationIds = (p) => (p?.relation || []).map((r) => r.id)
 export const getFile = (p) => {
   const f = p?.files?.[0]

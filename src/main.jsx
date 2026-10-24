@@ -9,6 +9,7 @@ import "./styles/layout.css"
 import "./styles/home.css"
 import "./styles/articles.css"
 import "./styles/legal.css"
+import "./styles/directory.css"
 import "./styles/glass.css"
 
 createRoot(document.getElementById("root")).render(

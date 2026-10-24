@@ -1,5 +1,6 @@
 import { defineConfig } from "vite"
 import react from "@vitejs/plugin-react"
+import { loadDirectory } from "./api/_directory.js"
 
 const ROUTES = ["/", "/articles", "/privacy", "/terms"]
 const ARTICLES_DB = "42a6bb268e244e7ab18af5ebf4175c0c"
@@ -26,6 +27,15 @@ async function articleSlugs() {
   }
 }
 
+// Directory listing slugs for the sitemap. Empty until DIRECTORY_DB_ID is set and listings are published.
+async function directorySlugs() {
+  try {
+    return (await loadDirectory()).map((x) => x.slug)
+  } catch {
+    return []
+  }
+}
+
 // Fills __SITE_URL__ in index.html and writes robots.txt and sitemap.xml at build time.
 function seoFiles() {
   return {
@@ -38,7 +48,7 @@ function seoFiles() {
       this.emitFile({
         type: "asset",
         fileName: "sitemap.xml",
-        source: `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${[...ROUTES, ...(await articleSlugs()).map((x) => `/articles/${x}`)].map((u) => `  <url><loc>${site}${u}</loc></url>`).join("\n")}\n</urlset>\n`,
+        source: `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${[...ROUTES, ...(await articleSlugs()).map((x) => `/articles/${x}`), ...(await directorySlugs()).flatMap((x, i) => [...(i === 0 ? ["/directory"] : []), `/directory/${x}`])].map((u) => `  <url><loc>${site}${u}</loc></url>`).join("\n")}\n</urlset>\n`,
       })
     },
   }

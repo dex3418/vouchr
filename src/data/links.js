@@ -14,3 +14,7 @@ export const CONTACT_EMAIL = "devashishmarkam5@gmail.com"
 // While this is empty, the WhatsApp buttons are hidden.
 export const WHATSAPP_NUMBER = ""
 export const WHATSAPP_TEXT = "Hi Vouchr, I would like to know more."
+
+// The Directory pages always work at /directory. This only controls the links to it in the menu and footer.
+// Turn it on (true) once there are listings in Notion.
+export const SHOW_DIRECTORY = false
