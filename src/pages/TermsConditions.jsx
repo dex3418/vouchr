@@ -1,191 +1,139 @@
-import { Link } from "react-router-dom";
-import Seo from "../components/seo/Seo.jsx";
+import Seo from "../components/seo/Seo.jsx"
+import NavBar from "../components/layout/NavBar.jsx"
+import Footer from "../components/layout/Footer.jsx"
+import { CONTACT_EMAIL } from "../data/links.js"
 
-const COLORS = {
-  core: "#22508A",
-  slate: "#3A82C4",
-  cyan: "#00C2FF",
-  white: "#FFFFFF",
-  offwhite: "#F8F9FA",
-  border: "#E2EAF4",
-  textDark: "#0F1A2B",
-  textMid: "#3D5270",
-  textLight: "#6B7FA3",
-};
+// Terms text. Edit the wording here; layout and theme live in styles/legal.css and glass.css.
+const SECTIONS = [
+  {
+    title: "Platform Nature",
+    body: "Vouchr is a connection platform. We connect individuals with skill learning platforms, job recruiters, and businesses. We are not a placement agency, recruiter, or employer.",
+  },
+  {
+    title: "User Responsibilities",
+    list: [
+      "All information submitted must be accurate",
+      "False information leads to immediate blacklisting",
+      "Users must respond to Vouchr verification calls",
+    ],
+  },
+  {
+    title: "Platform Responsibilities",
+    intro: "Registered platforms on Vouchr must:",
+    list: [
+      "Provide accurate business information",
+      "Comply with Vouchr verification process",
+      "Not misuse individual data shared by Vouchr",
+      "Maintain ethical conduct with all individuals",
+    ],
+  },
+  {
+    title: "Verification",
+    body: "Vouchr verifies platforms through physical visits and background checks. Verified status is valid for one year and subject to renewal.",
+  },
+  {
+    title: "Complaint Policy",
+    body: "One confirmed complaint against a platform results in immediate suspension. Confirmed complaints result in permanent ban with no re-registration.",
+  },
+  {
+    title: "Refund Policy",
+    list: [
+      "₹500 posting fee is non-refundable",
+      "50% refund applicable only if individual no-show within 15 days",
+      "Commission charged only on confirmed joins",
+    ],
+  },
+  {
+    title: "Data Privacy",
+    body: "All data collected is governed by our Privacy Policy. By using Vouchr you agree to our Privacy Policy.",
+  },
+  {
+    title: "Limitation of Liability",
+    intro: "Vouchr is not responsible for:",
+    list: ["Actions of platforms after data handover", "Employment outcomes", "Course completion or results"],
+  },
+  {
+    title: "Governing Law",
+    body: "These terms are governed by the laws of India.",
+  },
+  {
+    title: "Cookie Policy",
+    body: "Vouchr website may use basic cookies for functionality purposes only. We do not use cookies for tracking or advertising.",
+  },
+  {
+    title: "Dispute Resolution",
+    body: "Any disputes arising from use of Vouchr will first be attempted to be resolved through mutual discussion. If unresolved, disputes will be governed by the courts of Chhattisgarh, India under applicable Indian law.",
+  },
+  {
+    title: "Contact",
+    contact: "For any queries contact us at {email}.",
+  },
+]
+
+const ACCENTS = ["m", "b", "g"]
+
+// Replaces {email} in a line with a mailto link.
+function WithEmail({ text }) {
+  const [before, after] = text.split("{email}")
+  if (after === undefined) return text
+  return (
+    <>
+      {before}
+      <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+      {after}
+    </>
+  )
+}
 
 export default function TermsConditions() {
   return (
     <>
       <Seo title="Terms of Service" description="The terms for using Vouchr." canonicalPath="/terms" />
-    <div style={{ fontFamily: "'DM Sans', 'Segoe UI', sans-serif", color: COLORS.textDark }}>
-      <link
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet"
-      />
-      {/* Nav */}
-      <nav style={{
-        background: COLORS.white,
-        borderBottom: `1px solid ${COLORS.border}`,
-        padding: "0 20px",
-        height: 56,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        position: "sticky",
-        top: 0,
-        zIndex: 100,
-      }}>
-        <Link to="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 8 }}>
-          <span style={{
-            fontWeight: 800,
-            fontSize: 22,
-            color: COLORS.core,
-            letterSpacing: "-0.5px",
-            cursor: "pointer",
-          }}>Vouchr</span>
-        </Link>
-        <a
-          href="/#register"
-          style={{
-            background: COLORS.core,
-            color: COLORS.white,
-            fontSize: 13,
-            fontWeight: 600,
-            padding: "7px 16px",
-            borderRadius: 6,
-            textDecoration: "none",
-            letterSpacing: "0.2px",
-          }}>
-          Register
-        </a>
-      </nav>
+      <NavBar />
+      <main className="section" lang="en-IN">
+        <div className="container legal">
+          <header className="legal__head fade-up">
+            <p className="sh__label">Legal</p>
+            <h1 className="sh__title">Terms &amp; Conditions</h1>
+            <p className="sh__sub">The terms for using Vouchr.</p>
+            <p className="legal__meta">By Novaforge Labs · Effective May 2026</p>
+          </header>
 
-      {/* Content */}
-      <section style={{ padding: "48px 20px", background: COLORS.white }}>
-        <div style={{ maxWidth: 680, margin: "0 auto" }}>
-          <h1 style={{
-            fontSize: 36,
-            fontWeight: 800,
-            color: COLORS.textDark,
-            margin: "0 0 8px",
-            letterSpacing: "-0.5px",
-          }}>Terms & Conditions</h1>
-          <p style={{ fontSize: 14, color: COLORS.textLight, margin: "0 0 32px" }}>By Novaforge Labs • Effective Date: May 2026</p>
+          <nav className="ltoc" aria-label="Sections">
+            <p className="ltoc__title">On this page</p>
+            <ol className="ltoc__list">
+              {SECTIONS.map((s, i) => (
+                <li key={s.title}>
+                  <a href={`#terms-${i + 1}`}>
+                    <span className="ltoc__n">{i + 1}</span>
+                    {s.title}
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </nav>
 
-          <div style={{ lineHeight: 1.8, color: COLORS.textMid }}>
-            <Section title="1. Platform Nature">
-              Vouchr is a connection platform. We connect individuals with skill learning platforms, job recruiters, and businesses. We are not a placement agency, recruiter, or employer.
-            </Section>
-
-            <Section title="2. User Responsibilities">
-              <ul style={{ margin: "8px 0", paddingLeft: 20 }}>
-                <li>All information submitted must be accurate</li>
-                <li>False information leads to immediate blacklisting</li>
-                <li>Users must respond to Vouchr verification calls</li>
-              </ul>
-            </Section>
-
-            <Section title="3. Platform Responsibilities">
-              Registered platforms on Vouchr must:
-              <ul style={{ margin: "8px 0", paddingLeft: 20 }}>
-                <li>Provide accurate business information</li>
-                <li>Comply with Vouchr verification process</li>
-                <li>Not misuse individual data shared by Vouchr</li>
-                <li>Maintain ethical conduct with all individuals</li>
-              </ul>
-            </Section>
-
-            <Section title="4. Verification">
-              Vouchr verifies platforms through physical visits and background checks. Verified status is valid for one year and subject to renewal.
-            </Section>
-
-            <Section title="5. Complaint Policy">
-              One confirmed complaint against a platform results in immediate suspension. Confirmed complaints result in permanent ban with no re-registration.
-            </Section>
-
-            <Section title="6. Refund Policy">
-              <ul style={{ margin: "8px 0", paddingLeft: 20 }}>
-                <li>₹500 posting fee is non-refundable</li>
-                <li>50% refund applicable only if individual no-show within 15 days</li>
-                <li>Commission charged only on confirmed joins</li>
-              </ul>
-            </Section>
-
-            <Section title="7. Data Privacy">
-              All data collected is governed by our Privacy Policy. By using Vouchr you agree to our Privacy Policy.
-            </Section>
-
-            <Section title="8. Limitation of Liability">
-              Vouchr is not responsible for:
-              <ul style={{ margin: "8px 0", paddingLeft: 20 }}>
-                <li>Actions of platforms after data handover</li>
-                <li>Employment outcomes</li>
-                <li>Course completion or results</li>
-              </ul>
-            </Section>
-
-            <Section title="9. Governing Law">
-              These terms are governed by the laws of India.
-            </Section>
-
-            <Section title="10. Cookie Policy">
-              Vouchr website may use basic cookies for functionality purposes only. We do not use cookies for tracking or advertising.
-            </Section>
-
-            <Section title="11. Dispute Resolution">
-              Any disputes arising from use of Vouchr will first be attempted to be resolved through mutual discussion. If unresolved, disputes will be governed by the courts of Chhattisgarh, India under applicable Indian law.
-            </Section>
-
-            <Section title="12. Contact">
-              For any queries contact us at devashishmarkam5@gmail.com.
-            </Section>
-          </div>
+          {SECTIONS.map((s, i) => (
+            <section key={s.title} id={`terms-${i + 1}`} className={`lcard lcard--${ACCENTS[i % 3]}`} aria-labelledby={`terms-h-${i + 1}`}>
+              <div className="lcard__head">
+                <span className="lcard__n" aria-hidden="true">{i + 1}</span>
+                <h2 className="lcard__t" id={`terms-h-${i + 1}`}>{s.title}</h2>
+              </div>
+              <div className="lcard__body">
+                {s.body && <p>{s.body}</p>}
+                {s.intro && <p>{s.intro}</p>}
+                {s.list && (
+                  <ul className="llist">
+                    {s.list.map((item) => <li key={item}>{item}</li>)}
+                  </ul>
+                )}
+                {s.contact && <p><WithEmail text={s.contact} /></p>}
+              </div>
+            </section>
+          ))}
         </div>
-      </section>
-
-      {/* Footer */}
-      <footer style={{
-        background: "#0D1929",
-        padding: "32px 20px",
-        color: "rgba(255,255,255,0.5)",
-      }}>
-        <div style={{ maxWidth: 680, margin: "0 auto" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: 20, marginBottom: 24 }}>
-            <div>
-              <p style={{ margin: "0 0 4px", fontWeight: 800, fontSize: 18, color: COLORS.white }}>Vouchr</p>
-              <p style={{ margin: 0, fontSize: 12 }}>A Novaforge Labs initiative</p>
-            </div>
-            <div style={{ fontSize: 13 }}>
-              <p style={{ margin: "0 0 6px", color: COLORS.white, fontWeight: 600 }}>Connect</p>
-              <p style={{ margin: "0 0 4px" }}>
-                Instagram:{" "}
-                <a href="https://instagram.com/vouc.hr" target="_blank" rel="noopener noreferrer"
-                  style={{ color: COLORS.cyan, textDecoration: "none" }}>@vouchr</a>
-              </p>
-              <p style={{ margin: 0 }}>contact@novaforgelabs.in</p>
-            </div>
-          </div>
-          <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: 20, fontSize: 12 }}>
-            <p style={{ margin: "0 0 8px" }}>
-              © 2026 Vouchr by Novaforge Labs. Operating in Dantewada, Sukma &amp; Bijapur, Chhattisgarh.
-            </p>
-            <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
-              <Link to="/privacy" style={{ color: COLORS.cyan, textDecoration: "none" }}>Privacy Policy</Link>
-              <Link to="/terms" style={{ color: COLORS.cyan, textDecoration: "none" }}>Terms & Conditions</Link>
-            </div>
-          </div>
-        </div>
-      </footer>
-    </div>
+      </main>
+      <Footer />
     </>
-  );
-}
-
-function Section({ title, children }) {
-  return (
-    <div style={{ marginBottom: 24 }}>
-      <h3 style={{ fontSize: 16, fontWeight: 700, color: COLORS.core, margin: "0 0 8px" }}>{title}</h3>
-      <p style={{ margin: 0 }}>{children}</p>
-    </div>
-  );
+  )
 }
